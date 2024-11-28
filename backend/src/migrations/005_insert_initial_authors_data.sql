@@ -1,0 +1,22 @@
+INSERT INTO authors (name)
+VALUES 
+    ('Harper Lee'),
+    ('George Orwell'),
+    ('F. Scott Fitzgerald'),
+    ('Herman Melville'),
+    ('Leo Tolstoy'),
+    ('Jane Austen'),
+    ('Fyodor Dostoevsky'),
+    ('J.D. Salinger'),
+    ('J.R.R. Tolkien'),
+    ('Ray Bradbury'),
+    ('Aldous Huxley'),
+    ('Homer'),
+    ('Charlotte Brontë'),
+    ('Emily Brontë'),
+    ('Oscar Wilde'),
+    ('Charles Dickens'),
+    ('Victor Hugo'),
+    ('Bram Stoker'),
+    ('Nathaniel Hawthorne'),
+    ('Mark Twain');

@@ -1,0 +1,22 @@
+.description-container {
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book_button {
+  padding: 7px 20px;
+  width: fit-content;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.small-hr {
+  background-color: gray;
+  height: 1px;
+  opacity: 0.3;
+}

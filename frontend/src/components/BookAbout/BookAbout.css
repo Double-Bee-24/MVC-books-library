@@ -1,0 +1,13 @@
+.book-about-container {
+  line-height: 20px;
+}
+
+.book-about-text {
+  text-indent: 20px;
+}
+
+.book-about-text::first-letter {
+  color: #45a049;
+  font-weight: 700;
+  font-size: 20px;
+}

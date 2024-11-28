@@ -1,0 +1,11 @@
+.book-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100px;
+  line-height: 20px;
+}
+
+strong {
+  font-weight: 700;
+}

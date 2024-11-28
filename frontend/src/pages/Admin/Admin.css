@@ -1,0 +1,34 @@
+.admin-page {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-label {
+  font-weight: bold;
+  width: max-content;
+}
+
+.page-numbers-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.page-numbers-container p {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.file-input {
+  width: max-content;
+}
+
+.file-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-table {
+  max-width: none;
+}

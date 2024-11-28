@@ -1,0 +1,22 @@
+INSERT INTO books (title, is_deleted)
+VALUES 
+    ('To Kill a Mockingbird', FALSE),
+    ('1984', FALSE),
+    ('The Great Gatsby', FALSE),
+    ('Moby Dick', FALSE),
+    ('War and Peace', FALSE),
+    ('Pride and Prejudice', FALSE),
+    ('Crime and Punishment', FALSE),
+    ('The Catcher in the Rye', FALSE),
+    ('The Hobbit', FALSE),
+    ('Fahrenheit 451', FALSE),
+    ('Brave New World', FALSE),
+    ('The Odyssey', FALSE),
+    ('Jane Eyre', FALSE),
+    ('Wuthering Heights', FALSE),
+    ('The Picture of Dorian Gray', FALSE),
+    ('Anna Karenina', FALSE),
+    ('Great Expectations', FALSE),
+    ('Les Misérables', FALSE),
+    ('Dracula', FALSE),
+    ('The Scarlet Letter', FALSE);
