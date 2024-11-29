@@ -29,12 +29,13 @@ This project is a simple Book Library Management System built using the MVC (Mod
 git clone https://github.com/Double-Bee-24/3.2-MVC-books-library.git
 ```
 
-### 2. Install dependencies
+### 2. Install dependencies in both 'frontend' and 'backend' folders
 ```bash
 npm i
 ```
 
-### 3. Create mySql database named mvc_library (you can use your own name, but make sure you set your DB_NAME in backend .env to this value)
+### 3. Set up database 
+Create mySql database named mvc_library (you can use your own name, but make sure you set your DB_NAME in backend .env to this value)
 
 ### 4. Create and configure .env file in the backend and frontend directories
 'Frontend' directory should include next lines in .env file:
@@ -55,5 +56,10 @@ JWT_SECRET="don't tell anyone"
 *DB_USER* (by default set to 'root') and *DB_PASSWORD* fields should contain your own database data. You also can change other fields and app would use your variables instead.
 Access to the admin panel requires *ADMIN_lOGIN/PASSWORD* to be entered to the login fields  
 
+### 5. Run app 
+Create two terminals, enter to the folders of both backend and frontend and use next command:
+```bash
+npm run dev
+```
 
 
