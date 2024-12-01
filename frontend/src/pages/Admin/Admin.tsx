@@ -3,25 +3,26 @@ import IBookPreview from "../../interfaces/IBookPreview";
 import { deleteBook, getBooks } from "../../services/booksService";
 import "./Admin.css";
 
+const fetchBooks = async (
+  setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>,
+  setTablePages: React.Dispatch<React.SetStateAction<number[]>>
+) => {
+  const books = await getBooks();
+  setBooksData(books);
+
+  const totalPages = Math.ceil(books.length / 5);
+
+  // Makes an array of numbers to represent table pages
+  setTablePages(Array.from({ length: totalPages }, (_, index) => index + 1));
+};
+
 export default function Admin(): JSX.Element {
   const [booksData, setBooksData] = useState<IBookPreview[]>([]);
   const [tablePages, setTablePages] = useState<number[]>([]);
   const [openTablePage, setOpenTablePage] = useState<number>(1);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const books = await getBooks();
-      setBooksData(books);
-
-      const totalPages = Math.ceil(books.length / 5);
-
-      // Makes an array of numbers to represent table pages
-      setTablePages(
-        Array.from({ length: totalPages }, (_, index) => index + 1)
-      );
-    };
-
-    fetchBooks();
+    fetchBooks(setBooksData, setTablePages);
   }, []);
 
   const booksElements = booksData.map((item, index) => {
@@ -33,24 +34,27 @@ export default function Admin(): JSX.Element {
     }
 
     return (
-      <tr key={item.book_id}>
+      <tr key={item.bookId}>
         <td>{item.title}</td>
-        <td>{item.author_name}</td>
+        <td>{item.authorNames}</td>
+        <td>{item.year}</td>
         <td>
           <button
             className="btn btn-danger"
-            onClick={() => handleDelete(item.book_id)}
+            onClick={() => handleDelete(item.bookId)}
           >
             Видалити
           </button>
         </td>
+        <td>{item.clicks}</td>
       </tr>
     );
   });
 
-  const handleDelete = (bookId: number | undefined): void => {
+  const handleDelete = async (bookId: number | undefined): Promise<void> => {
     if (bookId) {
-      deleteBook(bookId);
+      await deleteBook(bookId);
+      fetchBooks(setBooksData, setTablePages);
     }
   };
 

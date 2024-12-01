@@ -1,22 +1,20 @@
 INSERT INTO authors (name)
 VALUES 
-    ('Harper Lee'),
-    ('George Orwell'),
-    ('F. Scott Fitzgerald'),
-    ('Herman Melville'),
-    ('Leo Tolstoy'),
-    ('Jane Austen'),
-    ('Fyodor Dostoevsky'),
-    ('J.D. Salinger'),
-    ('J.R.R. Tolkien'),
-    ('Ray Bradbury'),
-    ('Aldous Huxley'),
-    ('Homer'),
-    ('Charlotte Brontë'),
-    ('Emily Brontë'),
-    ('Oscar Wilde'),
-    ('Charles Dickens'),
-    ('Victor Hugo'),
-    ('Bram Stoker'),
-    ('Nathaniel Hawthorne'),
-    ('Mark Twain');
+    ('Тарас Шевченко'), -- 1
+    ('Леся Українка'), -- 2
+    ('Михайло Коцюбинський'), -- 3
+    ('Іван Франко'), -- 4
+    ('Юрій Яновський'), -- 5
+    ('Олесь Гончар'), -- 6
+    ('Ліна Костенко'), -- 7
+    ('Пантелеймон Куліш'), -- 8
+    ('Марія Матіос'), -- 9
+    ('Василь Барка'), -- 10
+    ('Осип Назарук'), -- 11 
+    ('Іван Нечуй-Левицький'), -- 12
+    ('Панас Мирний'), -- 13
+    ('Ольга Кобилянська'), -- 14
+    ('Борис Грінченко'), -- 15
+    ('Іван Котляревський'), -- 16
+    ('Олександр Довженко'), -- 17
+    ('Іван Білик');-- 18 

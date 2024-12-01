@@ -7,6 +7,7 @@ const router = express.Router();
 router.get('/books', getBooks);
 router.delete('/books/:bookId', deleteBook);
 
+// Authorization
 router.post('/login', login);
 router.post('/logout', logout);
 

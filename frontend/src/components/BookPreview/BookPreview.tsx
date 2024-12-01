@@ -4,7 +4,7 @@ import IBookPreview from "../../interfaces/IBookPreview";
 
 export default function BookPreview({
   title,
-  author_name,
+  authorNames,
 }: IBookPreview): JSX.Element {
   return (
     <div className="book-preview">
@@ -14,7 +14,7 @@ export default function BookPreview({
         className="book-preview_cover"
       />
       <p>{title}</p>
-      <p>{author_name}</p>
+      <p>{authorNames}</p>
       <button>Читати</button>
     </div>
   );

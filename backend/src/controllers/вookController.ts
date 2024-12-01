@@ -39,9 +39,9 @@ const deleteBook = async (req: Request, res: Response) => {
     const { bookId } = req.params;
     console.log(bookId);
 
-    const rows = await deleteBookFromDb(Number(bookId));
+    await deleteBookFromDb(Number(bookId));
 
-    res.status(200).send(rows);
+    res.status(200).json({ message: 'Deleted succesfully' });
   } catch (error) {
     console.error('error during deleting books: ', error);
     res.status(500).json({ error: 'Internal server error' });

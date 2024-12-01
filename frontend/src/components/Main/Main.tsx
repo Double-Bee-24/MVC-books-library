@@ -18,8 +18,8 @@ export default function Main(): JSX.Element {
 
   const bookPreviews = booksData.map((item) => (
     <BookPreview
-      key={item.book_id}
-      author_name={item.author_name}
+      key={item.bookId}
+      authorNames={item.authorNames}
       title={item.title}
     ></BookPreview>
   ));

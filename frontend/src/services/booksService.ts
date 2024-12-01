@@ -19,7 +19,7 @@ const deleteBook = async (bookId: number): Promise<void> => {
   try {
     const response = await instance.delete(`/books/${bookId}`);
     const data = response.data;
-    console.log("Received books: ", data);
+    console.log("deletion :", data);
   } catch (error) {
     console.error("Error while fetching books: ", error);
   }

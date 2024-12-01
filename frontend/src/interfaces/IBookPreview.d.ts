@@ -1,6 +1,7 @@
 export default interface IBookPreview {
-  book_id?: number;
-  author_id?: number;
+  authorNames: string;
   title: string;
-  author_name: string;
+  bookId?: number;
+  clicks?: number;
+  year?: number;
 }
