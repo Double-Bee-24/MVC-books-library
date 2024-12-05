@@ -4,3 +4,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.library-main p {
+  margin-bottom: 0;
+}

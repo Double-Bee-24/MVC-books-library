@@ -1,20 +1,21 @@
+import IBookPreview from "../../interfaces/IBookPreview";
 import "./BookDetails.css";
 
-export default function BookDetails() {
+export default function BookDetails({ authorNames, year }: IBookPreview) {
   return (
     <div className="book-details">
       <p>
-        <strong>Автор:</strong> Шевченко
+        <strong>Автор:</strong> {authorNames}
       </p>
       <p>
-        <strong>Рік:</strong> 1991
+        <strong>Рік:</strong> {year}
       </p>
       <p>
         <strong>Сторінок:</strong> 325
       </p>
-      <p>
+      {/* <p>
         <strong>ISBN:</strong> хто зна
-      </p>
+      </p> */}
     </div>
   );
 }

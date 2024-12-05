@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import IBookPreview from "../../interfaces/IBookPreview";
-import { deleteBook, getBooks } from "../../services/booksService";
+import { createBook, deleteBook, getBooks } from "../../services/booksService";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./Admin.css";
 
 const fetchBooks = async (
@@ -20,6 +22,18 @@ export default function Admin(): JSX.Element {
   const [booksData, setBooksData] = useState<IBookPreview[]>([]);
   const [tablePages, setTablePages] = useState<number[]>([]);
   const [openTablePage, setOpenTablePage] = useState<number>(1);
+  const [newBookData, setNewBookData] = useState<{
+    title: string;
+    year: number;
+  }>({
+    title: "",
+    year: 0,
+  });
+  const [newBookAuthors, setNewBookAuthors] = useState<{
+    firstAuthor: string;
+    secondAuthor: string;
+    thirdAuthor: string;
+  }>({ firstAuthor: "", secondAuthor: "", thirdAuthor: "" });
 
   useEffect(() => {
     fetchBooks(setBooksData, setTablePages);
@@ -47,9 +61,16 @@ export default function Admin(): JSX.Element {
           </button>
         </td>
         <td>{item.clicks}</td>
+        <td>{item.viewsCount}</td>
       </tr>
     );
   });
+
+  const pageNumbers = tablePages.map((_, index) => (
+    <p key={index} onClick={() => handleClick(index + 1)}>
+      {index + 1}
+    </p>
+  ));
 
   const handleDelete = async (bookId: number | undefined): Promise<void> => {
     if (bookId) {
@@ -62,11 +83,29 @@ export default function Admin(): JSX.Element {
     setOpenTablePage(activePage);
   };
 
-  const pageNumbers = tablePages.map((_, index) => (
-    <p key={index} onClick={() => handleClick(index + 1)}>
-      {index + 1}
-    </p>
-  ));
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    const authorNames = [
+      newBookAuthors.firstAuthor,
+      newBookAuthors.secondAuthor,
+      newBookAuthors.thirdAuthor,
+    ]
+      .filter((author) => author)
+      .join(",");
+
+    createBook({ ...newBookData, authorNames });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+
+    if (name === "title" || name === "year") {
+      setNewBookData((prev) => ({ ...prev, [name]: value }));
+    } else {
+      setNewBookAuthors((prev) => ({ ...prev, [name]: value }));
+    }
+  };
 
   return (
     <div className="d-flex justify-content-between">
@@ -81,6 +120,7 @@ export default function Admin(): JSX.Element {
                 <th>Рік</th>
                 <th>Дії</th>
                 <th>Кліки</th>
+                <th>Перегляди</th>
               </tr>
             </thead>
             <tbody>{booksElements}</tbody>
@@ -91,17 +131,19 @@ export default function Admin(): JSX.Element {
 
       <div className="admin-page p-4 border border-primary rounded w-50">
         <h2>Додати книгу</h2>
-        <form className="container mt-4">
+        <form className="container mt-4" onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6 mb-3">
               <label htmlFor="bookTitle" className="form-label">
                 Назва книги
               </label>
               <input
+                name="title"
                 type="text"
                 className="form-control"
                 id="bookTitle"
                 placeholder="Введіть назву книги"
+                onChange={handleChange}
               />
             </div>
 
@@ -110,10 +152,12 @@ export default function Admin(): JSX.Element {
                 Рік видання
               </label>
               <input
+                name="year"
                 type="number"
                 className="form-control"
                 id="publicationYear"
                 placeholder="Введіть рік видання"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -124,10 +168,12 @@ export default function Admin(): JSX.Element {
                 Автор 1
               </label>
               <input
+                name="firstAuthor"
                 type="text"
                 className="form-control"
                 id="author1"
                 placeholder="Введіть ім'я першого автора"
+                onChange={handleChange}
               />
             </div>
 
@@ -136,10 +182,12 @@ export default function Admin(): JSX.Element {
                 Автор 2
               </label>
               <input
+                name="secondAuthor"
                 type="text"
                 className="form-control"
                 id="author2"
                 placeholder="Введіть ім'я другого автора"
+                onChange={handleChange}
               />
             </div>
 
@@ -148,10 +196,12 @@ export default function Admin(): JSX.Element {
                 Автор 3
               </label>
               <input
+                name="thirdAuthor"
                 type="text"
                 className="form-control"
                 id="author3"
                 placeholder="Введіть ім'я третього автора"
+                onChange={handleChange}
               />
             </div>
           </div>

@@ -1,6 +1,6 @@
 .book-main {
   display: flex;
   justify-content: flex-start;
-  margin: 120px auto 0;
+  align-self: center;
   max-width: 1200px;
 }

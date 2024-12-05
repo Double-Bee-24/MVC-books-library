@@ -5,6 +5,7 @@ import runMigrations from './migrate';
 import dotenv from 'dotenv';
 import createConnection from './config/database';
 import { router } from './routes/router';
+import { adminRouter } from './routes/adminRouter';
 
 // Need to access env variable safely
 dotenv.config();
@@ -29,4 +30,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
   });
 })();
 
+app.use('/admin/api/v1', adminRouter);
 app.use('/api/v1', router);

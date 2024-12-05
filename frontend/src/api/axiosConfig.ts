@@ -8,4 +8,11 @@ const instance = axios.create({
   },
 });
 
-export default instance;
+const adminInstance = axios.create({
+  baseURL: api.adminURL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export { instance, adminInstance };

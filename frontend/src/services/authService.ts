@@ -1,4 +1,4 @@
-import instance from "../api/axiosConfig";
+import { instance } from "../api/axiosConfig";
 
 // Loggin in and TODO: sets refreshToken to the localStorage
 const login = async (credentials: {

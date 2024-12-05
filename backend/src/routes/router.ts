@@ -1,11 +1,12 @@
 import express from 'express';
-import { getBooks, deleteBook } from '../controllers/вookController';
-import { login, logout } from '../controllers/authController';
+import { getBooks, increaseBookRate } from '../controllers/BookController';
+import { login, logout } from '../controllers/AuthController';
 
 const router = express.Router();
 
+// Books
 router.get('/books', getBooks);
-router.delete('/books/:bookId', deleteBook);
+router.put('/books/:bookId', increaseBookRate);
 
 // Authorization
 router.post('/login', login);

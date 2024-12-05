@@ -21,6 +21,8 @@ export default function Main(): JSX.Element {
       key={item.bookId}
       authorNames={item.authorNames}
       title={item.title}
+      year={item.year}
+      bookId={item.bookId}
     ></BookPreview>
   ));
 

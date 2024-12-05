@@ -84,6 +84,7 @@ video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
+  margin-bottom: 0;
 }
 /* HTML5 display-role reset for older browsers */
 article,
