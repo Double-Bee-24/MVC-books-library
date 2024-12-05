@@ -40,7 +40,8 @@ Create mySql database named mvc_library (you can use your own name, but make sur
 ### 4. Create and configure .env file in the backend and frontend directories
 'Frontend' directory should include next lines in .env file:
 ```bash
- VITE_API_URL=http://localhost:3000/api/v1
+ VITE_BASE_API_URL=http://localhost:3000/api/v1
+ VITE_ADMIN_API_URL=http://localhost:3000/admin/api/v1
 ```
 'Backend' directory should include next .env file: 
 ```bash
