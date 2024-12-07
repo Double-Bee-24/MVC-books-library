@@ -53,9 +53,10 @@ DB_NAME=mvc_library
 ADMIN_LOGIN=admin
 ADMIN_PASSWORD="&S8f^k2#JpR$L9z@X7g!"
 JWT_SECRET="don't tell anyone"
+REFRESH_SECRET="orange strawberry juice"
 ```
 *DB_USER* (by default set to 'root') and *DB_PASSWORD* fields should contain your own database data. You also can change other fields and app would use your variables instead.
-Access to the admin panel requires *ADMIN_lOGIN/PASSWORD* to be entered to the login fields  
+Access to the admin panel requires *ADMIN_LOGIN/PASSWORD* to be entered to the login fields  
 
 ### 5. Run app 
 Create two terminals, enter to the folders of both backend and frontend and use next command:
