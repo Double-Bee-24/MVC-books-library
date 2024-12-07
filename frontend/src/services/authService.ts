@@ -1,12 +1,16 @@
 import { instance } from "../api/axiosConfig";
 
-// Loggin in and TODO: sets refreshToken to the localStorage
 const login = async (credentials: {
   login: string;
   password: string;
 }): Promise<string> => {
   try {
-    await instance.post("/login", credentials);
+    const result = await instance.post("/login", credentials);
+    const { refreshToken, accessToken } = result.data;
+
+    // Store tokens in browser memory
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
 
     return "success";
   } catch (error) {

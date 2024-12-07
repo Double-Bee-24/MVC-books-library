@@ -9,7 +9,8 @@ const fetchBooks = async (
   setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>,
   setTablePages: React.Dispatch<React.SetStateAction<number[]>>
 ) => {
-  const books = await getBooks();
+  const { books } = await getBooks({ offset: "max" });
+
   setBooksData(books);
 
   const totalPages = Math.ceil(books.length / 5);

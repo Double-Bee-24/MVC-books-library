@@ -1,0 +1,7 @@
+.navigation-panel {
+  margin: 20px 0;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

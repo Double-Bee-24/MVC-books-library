@@ -1,16 +1,30 @@
 import { instance, adminInstance } from "../api/axiosConfig";
 import IBookPreview from "../interfaces/IBookPreview";
 
-// Fetches books from server
-const getBooks = async (): Promise<IBookPreview[]> => {
-  try {
-    const response = await instance.get("/books");
-    const data: IBookPreview[] = response.data;
+interface IGetBooksParams {
+  offset?: number | string;
+  search?: string;
+  author?: number;
+  year?: number;
+}
 
-    return data;
+// Fetches books from server
+const getBooks = async (
+  params: IGetBooksParams
+): Promise<{ books: IBookPreview[]; totalBooksCount: number }> => {
+  try {
+    // const defaultParams = { offset: 20 };
+    const response = await instance.get("/books", {
+      params,
+    });
+
+    const books: IBookPreview[] = response.data.books;
+    const totalBooksCount: number = response.data.totalBooksCount;
+
+    return { books, totalBooksCount };
   } catch (error) {
     console.error("Error while fetching books: ", error);
-    return [];
+    return { books: [], totalBooksCount: 0 };
   }
 };
 
@@ -44,4 +58,18 @@ const deleteBook = async (bookId: number): Promise<void> => {
   }
 };
 
-export { getBooks, deleteBook, increaseBookRate, createBook };
+const searchBooks = async (searchString: string): Promise<IBookPreview[]> => {
+  try {
+    const response = await instance.get("/books/search", {
+      params: { searchString },
+    });
+
+    const books: IBookPreview[] = response.data;
+    return books;
+  } catch (error) {
+    console.error("Error while searching a book: ", error);
+    return [];
+  }
+};
+
+export { getBooks, deleteBook, increaseBookRate, createBook, searchBooks };

@@ -5,13 +5,22 @@ import {
   increaseClicksInDb,
   increaseViewsInDb,
   addBookToDb,
+  getTotalBooksCount,
+  searchBooksInDb,
 } from '../models/BookModel';
 
 const getBooks = async (req: Request, res: Response) => {
   try {
-    const rows = await getBooksWithAuthorsFromDb();
+    const { offset } = req.query;
 
-    res.status(200).send(rows);
+    if (typeof offset !== 'string' && typeof offset !== 'number') {
+      res.status(400).json({ error: 'Incorrect data type' });
+      return;
+    }
+    const books = await getBooksWithAuthorsFromDb(offset);
+    const totalBooksCount = await getTotalBooksCount();
+
+    res.status(200).json({ books, totalBooksCount });
   } catch (error) {
     console.error('error during sending books: ', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -54,7 +63,6 @@ const increaseBookRate = async (req: Request, res: Response) => {
 const addBook = async (req: Request, res: Response) => {
   try {
     const bookData = req.body;
-    console.log(bookData, 'bookData');
 
     addBookToDb({ ...bookData, authorNames: bookData.authorNames.split(',') });
   } catch (error) {
@@ -63,4 +71,19 @@ const addBook = async (req: Request, res: Response) => {
   }
 };
 
-export { getBooks, deleteBook, increaseBookRate, addBook };
+const searchBooks = async (req: Request, res: Response) => {
+  try {
+    const { searchString } = req.query;
+
+    if (typeof searchString !== 'string') {
+      res.status(400).json({ error: 'search string should be a string type' });
+      return;
+    }
+
+    const foundBooks = await searchBooksInDb(searchString);
+
+    res.status(200).json(foundBooks);
+  } catch (error) {}
+};
+
+export { getBooks, deleteBook, increaseBookRate, addBook, searchBooks };

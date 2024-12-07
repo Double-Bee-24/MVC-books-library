@@ -1,0 +1,24 @@
+.found-books-main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.book-previews-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.found-resume {
+  align-self: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 35px;
+}
+
+.found-resume::first-letter {
+  text-transform: uppercase;
+}

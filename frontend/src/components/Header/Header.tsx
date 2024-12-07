@@ -2,8 +2,18 @@
 import { useNavigate } from "react-router-dom";
 import FindBookForm from "../FindBookForm/FindBookForm";
 import "./Header.css";
+import React from "react";
+import IBookPreview from "../../interfaces/IBookPreview";
 
-export default function Header(): JSX.Element {
+interface IHeader {
+  setIsSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>;
+}
+
+export default function Header({
+  setIsSearchActive,
+  setBooksData,
+}: IHeader): JSX.Element {
   const navigate = useNavigate();
 
   return (
@@ -16,7 +26,10 @@ export default function Header(): JSX.Element {
             className="big-logo"
             onClick={() => navigate("/")}
           />
-          <FindBookForm></FindBookForm>
+          <FindBookForm
+            setIsSearchActive={setIsSearchActive}
+            setBooksData={setBooksData}
+          ></FindBookForm>
         </div>
         <hr />
       </header>
