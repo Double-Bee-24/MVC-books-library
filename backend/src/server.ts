@@ -4,8 +4,8 @@ import bodyParser from 'body-parser';
 import runMigrations from './migrate';
 import dotenv from 'dotenv';
 import createConnection from './config/database';
-import { router } from './routes/router';
-import { adminRouter } from './routes/adminRouter';
+import { createRouter } from './routes/router';
+import { createAdminRouter } from './routes/adminRouter';
 
 // Need to access env variable safely
 dotenv.config();
@@ -25,10 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
   await createAdmin(connection);
 
+  const router = createRouter(connection);
+  const adminRouter = createAdminRouter(connection);
+
+  app.use('/admin/api/v1', adminRouter);
+  app.use('/api/v1', router);
+
   app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
   });
 })();
-
-app.use('/admin/api/v1', adminRouter);
-app.use('/api/v1', router);

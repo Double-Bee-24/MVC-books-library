@@ -8,8 +8,13 @@ import {
   getTotalBooksCount,
   searchBooksInDb,
 } from '../models/BookModel';
+import { Connection } from 'mysql2/promise';
 
-const getBooks = async (req: Request, res: Response) => {
+const getBooks = async (
+  req: Request,
+  res: Response,
+  connection: Connection
+) => {
   try {
     const { offset } = req.query;
 
@@ -17,8 +22,8 @@ const getBooks = async (req: Request, res: Response) => {
       res.status(400).json({ error: 'Incorrect data type' });
       return;
     }
-    const books = await getBooksWithAuthorsFromDb(offset);
-    const totalBooksCount = await getTotalBooksCount();
+    const books = await getBooksWithAuthorsFromDb(offset, connection);
+    const totalBooksCount = await getTotalBooksCount(connection);
 
     res.status(200).json({ books, totalBooksCount });
   } catch (error) {
@@ -27,11 +32,15 @@ const getBooks = async (req: Request, res: Response) => {
   }
 };
 
-const deleteBook = async (req: Request, res: Response) => {
+const deleteBook = async (
+  req: Request,
+  res: Response,
+  connection: Connection
+) => {
   try {
     const { bookId } = req.params;
 
-    await deleteBookFromDb(Number(bookId));
+    await deleteBookFromDb(Number(bookId), connection);
 
     res.status(200).json({ message: `Deleted succesfully! Id: ${bookId}` });
   } catch (error) {
@@ -40,17 +49,21 @@ const deleteBook = async (req: Request, res: Response) => {
   }
 };
 
-const increaseBookRate = async (req: Request, res: Response) => {
+const increaseBookRate = async (
+  req: Request,
+  res: Response,
+  connection: Connection
+) => {
   try {
     const { bookId } = req.params;
     const { rate } = req.body;
 
     if (rate === 'clicks') {
-      await increaseClicksInDb(Number(bookId));
+      await increaseClicksInDb(Number(bookId), connection);
     }
 
     if (rate === 'views') {
-      await increaseViewsInDb(Number(bookId));
+      await increaseViewsInDb(Number(bookId), connection);
     }
 
     res.status(200).json({ message: `Deleted succesfully! Id: ${bookId}` });
@@ -60,18 +73,25 @@ const increaseBookRate = async (req: Request, res: Response) => {
   }
 };
 
-const addBook = async (req: Request, res: Response) => {
+const addBook = async (req: Request, res: Response, connection: Connection) => {
   try {
     const bookData = req.body;
 
-    addBookToDb({ ...bookData, authorNames: bookData.authorNames.split(',') });
+    addBookToDb(
+      { ...bookData, authorNames: bookData.authorNames.split(',') },
+      connection
+    );
   } catch (error) {
     console.error('Error during adding a new book: ', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-const searchBooks = async (req: Request, res: Response) => {
+const searchBooks = async (
+  req: Request,
+  res: Response,
+  connection: Connection
+) => {
   try {
     const { searchString } = req.query;
 
@@ -80,7 +100,7 @@ const searchBooks = async (req: Request, res: Response) => {
       return;
     }
 
-    const foundBooks = await searchBooksInDb(searchString);
+    const foundBooks = await searchBooksInDb(searchString, connection);
 
     res.status(200).json(foundBooks);
   } catch (error) {}

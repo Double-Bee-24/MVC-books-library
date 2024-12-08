@@ -9,22 +9,27 @@ import dotenv from 'dotenv';
 import TypedRequestBody from '../interfaces/TypedRequestBody';
 import ILoginBody from '../interfaces/ILoginBody';
 import IRefresshToken from '../interfaces/IRefreshToken';
+import { Connection } from 'mysql2/promise';
 
 // Login admin to website
-const login = async (req: TypedRequestBody<ILoginBody>, res: Response) => {
+const login = async (
+  req: TypedRequestBody<ILoginBody>,
+  res: Response,
+  connection: Connection
+) => {
   dotenv.config();
 
   try {
     const { login, password } = req.body;
 
-    const isPasswordValid = await checkPassword(login, password);
+    const isPasswordValid = await checkPassword(login, password, connection);
 
     if (!isPasswordValid) {
       res.status(401).json({ error: 'Invalid credentials' });
       return;
     }
 
-    const adminId = await getAdminIdFromDb(login);
+    const adminId = await getAdminIdFromDb(login, connection);
 
     const payload = { login };
     const secretKey = process.env.JWT_SECRET || 'default key';
@@ -36,7 +41,7 @@ const login = async (req: TypedRequestBody<ILoginBody>, res: Response) => {
       expiresIn: '7d',
     });
 
-    await saveRefreshTokenToDb(refreshToken, adminId);
+    await saveRefreshTokenToDb(refreshToken, adminId, connection);
 
     res.status(200).json({
       message: 'Login successful',
@@ -51,7 +56,8 @@ const login = async (req: TypedRequestBody<ILoginBody>, res: Response) => {
 
 const updateToken = async (
   req: TypedRequestBody<IRefresshToken>,
-  res: Response
+  res: Response,
+  connection: Connection
 ): Promise<void> => {
   try {
     const { refreshToken } = req.body;
@@ -82,8 +88,8 @@ const updateToken = async (
     );
 
     // Refresh token in db
-    const adminId = await getAdminIdFromDb(decoded.login);
-    await saveRefreshTokenToDb(newRefreshToken, adminId);
+    const adminId = await getAdminIdFromDb(decoded.login, connection);
+    await saveRefreshTokenToDb(newRefreshToken, adminId, connection);
 
     res.status(200).json({
       message: 'Tokens updated successfully',
@@ -97,7 +103,7 @@ const updateToken = async (
 };
 
 // Logout admin from the website
-const logout = async (req: Request, res: Response) => {
+const logout = async (req: Request, res: Response, connection: Connection) => {
   try {
     const authHeader = req.headers['authorization'];
     if (!authHeader) {
@@ -118,8 +124,8 @@ const logout = async (req: Request, res: Response) => {
     const decoded = jwt.verify(token, refreshSecretKey) as { login: string };
 
     // Deletes refresh token from db
-    const adminId = await getAdminIdFromDb(decoded.login);
-    await saveRefreshTokenToDb('', adminId);
+    const adminId = await getAdminIdFromDb(decoded.login, connection);
+    await saveRefreshTokenToDb('', adminId, connection);
 
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {

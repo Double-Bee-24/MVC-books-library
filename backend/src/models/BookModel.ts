@@ -1,9 +1,10 @@
-import createConnection from '../config/database';
+import { Connection } from 'mysql2/promise';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
-const getBooksWithAuthorsFromDb = async (limit: string | number) => {
-  const connection = await createConnection();
-
+const getBooksWithAuthorsFromDb = async (
+  limit: string | number,
+  connection: Connection
+) => {
   // If we want to get all the data
   const isMax = limit === 'max';
 
@@ -27,61 +28,49 @@ const getBooksWithAuthorsFromDb = async (limit: string | number) => {
     [Number(limit)]
   );
 
-  connection.end();
   return rows;
 };
 
-const getTotalBooksCount = async (): Promise<number> => {
-  const connection = await createConnection();
-
+const getTotalBooksCount = async (connection: Connection): Promise<number> => {
   const [rows] = await connection.query(
     `SELECT COUNT(*) AS totalBooks FROM books WHERE is_deleted = FALSE;`
   );
 
   const totalBooks = (rows as [{ totalBooks: number }])[0].totalBooks;
 
-  connection.end();
   return totalBooks;
 };
 
-const deleteBookFromDb = async (bookId: number) => {
-  const d = await createConnection();
-
-  await d.query(`UPDATE books SET is_deleted = TRUE WHERE id = ?`, [bookId]);
-
-  d.end();
+const deleteBookFromDb = async (bookId: number, connection: Connection) => {
+  await connection.query(`UPDATE books SET is_deleted = TRUE WHERE id = ?`, [
+    bookId,
+  ]);
 };
 
 // Increase clicks field in db to show rate of a book on admins page
-const increaseClicksInDb = async (bookId: number) => {
-  const d = await createConnection();
-
-  await d.query(
+const increaseClicksInDb = async (bookId: number, connection: Connection) => {
+  await connection.query(
     `UPDATE books SET clicks_count = clicks_count + 1 WHERE id = ?`,
     [bookId]
   );
-
-  d.end();
 };
 
 // Increase view field in db to show rate of a book on admins page
-const increaseViewsInDb = async (bookId: number) => {
-  const d = await createConnection();
-
-  await d.query(`UPDATE books SET views_count = views_count + 1 WHERE id = ?`, [
-    bookId,
-  ]);
-
-  d.end();
+const increaseViewsInDb = async (bookId: number, connection: Connection) => {
+  await connection.query(
+    `UPDATE books SET views_count = views_count + 1 WHERE id = ?`,
+    [bookId]
+  );
 };
 
-const addBookToDb = async (bookData: {
-  title: string;
-  year: string;
-  authorNames: string[];
-}) => {
-  const connection = await createConnection();
-
+const addBookToDb = async (
+  bookData: {
+    title: string;
+    year: string;
+    authorNames: string[];
+  },
+  connection: Connection
+) => {
   try {
     // Adds book
     const [bookResult] = await connection.query<ResultSetHeader>(
@@ -131,15 +120,11 @@ const addBookToDb = async (bookData: {
     }
   } catch (error) {
     console.error('Error while adding book and authors: ', error);
-  } finally {
-    connection.end();
   }
 };
 
 // Find book using auhtor or title
-const searchBooksInDb = async (search: string) => {
-  const connection = await createConnection();
-
+const searchBooksInDb = async (search: string, connection: Connection) => {
   const searchPattern = `%${search}%`;
 
   const [rows] = await connection.query(
@@ -161,7 +146,6 @@ const searchBooksInDb = async (search: string) => {
     [searchPattern, searchPattern]
   );
 
-  connection.end();
   return rows;
 };
 
