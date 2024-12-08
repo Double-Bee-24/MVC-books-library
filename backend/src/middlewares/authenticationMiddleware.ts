@@ -1,27 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: { id: number; role: string; login: string };
-    }
-  }
-}
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       user?: { id: number; role: string; login: string };
+//     }
+//   }
+// }
 
-interface DecodedToken extends JwtPayload {
-  id: number;
-  role: string;
-  login: string;
-}
-
+// Check jwt token relevancy before admin's actions
 const authenticationMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const authHeader = req.headers['authorization'];
-  console.log(authHeader, 'req.headers');
 
   if (!authHeader) {
     res.status(401).json({ error: 'Access denied, no token provided' });
@@ -38,10 +32,8 @@ const authenticationMiddleware = (
   try {
     const secretKey = process.env.JWT_SECRET || 'default_secret';
 
-    // Check a token and infer it like DecodedToken
-    const decoded = jwt.verify(token, secretKey) as DecodedToken;
-
-    req.user = decoded;
+    // Check a token
+    jwt.verify(token, secretKey);
 
     next();
   } catch (error) {

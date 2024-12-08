@@ -64,7 +64,7 @@ const updateToken = async (
     const refreshSecretKey =
       process.env.REFRESH_SECRET || 'default_refresh_key';
 
-    // Перевіряємо refresh token
+    // Сheck refresh token
     const decoded = jwt.verify(refreshToken, refreshSecretKey) as {
       login: string;
     };
