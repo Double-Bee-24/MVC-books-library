@@ -1,5 +1,5 @@
 import { instance, adminInstance } from "../api/axiosConfig";
-import IBookPreview from "../interfaces/IBookPreview";
+import IBookData from "../interfaces/IBookData";
 
 interface IGetBooksParams {
   offset?: number | string;
@@ -11,14 +11,14 @@ interface IGetBooksParams {
 // Fetches books from server
 const getBooks = async (
   params: IGetBooksParams
-): Promise<{ books: IBookPreview[]; totalBooksCount: number }> => {
+): Promise<{ books: IBookData[]; totalBooksCount: number }> => {
   try {
     // const defaultParams = { offset: 20 };
     const response = await instance.get("/books", {
       params,
     });
 
-    const books: IBookPreview[] = response.data.books;
+    const books: IBookData[] = response.data.books;
     const totalBooksCount: number = response.data.totalBooksCount;
 
     return { books, totalBooksCount };
@@ -40,7 +40,7 @@ const increaseBookRate = async (
   }
 };
 
-const createBook = async (bookData: IBookPreview): Promise<void> => {
+const createBook = async (bookData: IBookData): Promise<void> => {
   console.log(bookData, " book data before sending");
   try {
     await adminInstance.post(`/books`, bookData);
@@ -58,13 +58,13 @@ const deleteBook = async (bookId: number): Promise<void> => {
   }
 };
 
-const searchBooks = async (searchString: string): Promise<IBookPreview[]> => {
+const searchBooks = async (searchString: string): Promise<IBookData[]> => {
   try {
     const response = await instance.get("/books/search", {
       params: { searchString },
     });
 
-    const books: IBookPreview[] = response.data;
+    const books: IBookData[] = response.data;
     return books;
   } catch (error) {
     console.error("Error while searching a book: ", error);

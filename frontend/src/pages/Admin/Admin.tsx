@@ -4,6 +4,8 @@ import { createBook, deleteBook, getBooks } from "../../services/booksService";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./Admin.css";
+import { logout } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const fetchBooks = async (
   setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>,
@@ -35,6 +37,8 @@ export default function Admin(): JSX.Element {
     secondAuthor: string;
     thirdAuthor: string;
   }>({ firstAuthor: "", secondAuthor: "", thirdAuthor: "" });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchBooks(setBooksData, setTablePages);
@@ -108,125 +112,139 @@ export default function Admin(): JSX.Element {
     }
   };
 
+  const handleLogout = (): void => {
+    logout();
+    navigate("/");
+  };
+
+  const handleGoMain = (): void => {
+    navigate("/");
+  };
+
   return (
-    <div className="d-flex justify-content-between">
-      <div className="admin-page p-4 border border-primary rounded w-30 admin-table">
-        <h3>Список книг</h3>
-        <div className="books-elements-container">
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Назва книги</th>
-                <th>Автори</th>
-                <th>Рік</th>
-                <th>Дії</th>
-                <th>Кліки</th>
-                <th>Перегляди</th>
-              </tr>
-            </thead>
-            <tbody>{booksElements}</tbody>
-          </table>
-          <div className="page-numbers-container">{pageNumbers}</div>
+    <div className="admin-page-container">
+      <div className="d-flex justify-content-between">
+        <div className="admin-page p-4 border border-primary rounded w-30 admin-table">
+          <h3>Список книг</h3>
+          <div className="books-elements-container">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Назва книги</th>
+                  <th>Автори</th>
+                  <th>Рік</th>
+                  <th>Дії</th>
+                  <th>Кліки</th>
+                  <th>Перегляди</th>
+                </tr>
+              </thead>
+              <tbody>{booksElements}</tbody>
+            </table>
+            <div className="page-numbers-container">{pageNumbers}</div>
+          </div>
+        </div>
+        <div className="admin-page p-4 border border-primary rounded w-50">
+          <h2>Додати книгу</h2>
+          <form className="container mt-4" onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="bookTitle" className="form-label">
+                  Назва книги
+                </label>
+                <input
+                  name="title"
+                  type="text"
+                  className="form-control"
+                  id="bookTitle"
+                  placeholder="Введіть назву книги"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label htmlFor="publicationYear" className="form-label">
+                  Рік видання
+                </label>
+                <input
+                  name="year"
+                  type="number"
+                  className="form-control"
+                  id="publicationYear"
+                  placeholder="Введіть рік видання"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-4 mb-3">
+                <label htmlFor="author1" className="form-label">
+                  Автор 1
+                </label>
+                <input
+                  name="firstAuthor"
+                  type="text"
+                  className="form-control"
+                  id="author1"
+                  placeholder="Введіть ім'я першого автора"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <label htmlFor="author2" className="form-label">
+                  Автор 2
+                </label>
+                <input
+                  name="secondAuthor"
+                  type="text"
+                  className="form-control"
+                  id="author2"
+                  placeholder="Введіть ім'я другого автора"
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="col-md-4 mb-3">
+                <label htmlFor="author3" className="form-label">
+                  Автор 3
+                </label>
+                <input
+                  name="thirdAuthor"
+                  type="text"
+                  className="form-control"
+                  id="author3"
+                  placeholder="Введіть ім'я третього автора"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="row file-container">
+              <div className="col-md-6 mb-3">
+                <label htmlFor="bookImage" className="form-label">
+                  Завантажити зображення книги
+                </label>
+                <input
+                  type="file"
+                  className="form-control form-control-lg file-input"
+                  id="bookImage"
+                  accept="image/*"
+                />
+              </div>
+
+              <div className="col-md-6 mb-3 d-flex align-items-end">
+                <button type="submit" className="btn btn-primary w-100">
+                  Додати
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-
-      <div className="admin-page p-4 border border-primary rounded w-50">
-        <h2>Додати книгу</h2>
-        <form className="container mt-4" onSubmit={handleSubmit}>
-          <div className="row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="bookTitle" className="form-label">
-                Назва книги
-              </label>
-              <input
-                name="title"
-                type="text"
-                className="form-control"
-                id="bookTitle"
-                placeholder="Введіть назву книги"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="col-md-6 mb-3">
-              <label htmlFor="publicationYear" className="form-label">
-                Рік видання
-              </label>
-              <input
-                name="year"
-                type="number"
-                className="form-control"
-                id="publicationYear"
-                placeholder="Введіть рік видання"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-4 mb-3">
-              <label htmlFor="author1" className="form-label">
-                Автор 1
-              </label>
-              <input
-                name="firstAuthor"
-                type="text"
-                className="form-control"
-                id="author1"
-                placeholder="Введіть ім'я першого автора"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="col-md-4 mb-3">
-              <label htmlFor="author2" className="form-label">
-                Автор 2
-              </label>
-              <input
-                name="secondAuthor"
-                type="text"
-                className="form-control"
-                id="author2"
-                placeholder="Введіть ім'я другого автора"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="col-md-4 mb-3">
-              <label htmlFor="author3" className="form-label">
-                Автор 3
-              </label>
-              <input
-                name="thirdAuthor"
-                type="text"
-                className="form-control"
-                id="author3"
-                placeholder="Введіть ім'я третього автора"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="row file-container">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="bookImage" className="form-label">
-                Завантажити зображення книги
-              </label>
-              <input
-                type="file"
-                className="form-control form-control-lg file-input"
-                id="bookImage"
-                accept="image/*"
-              />
-            </div>
-
-            <div className="col-md-6 mb-3 d-flex align-items-end">
-              <button type="submit" className="btn btn-primary w-100">
-                Додати
-              </button>
-            </div>
-          </div>
-        </form>
+      <div className="admin-buttons-container">
+        <button onClick={handleGoMain}>На головну</button>
+        <button onClick={handleLogout}>Вийти</button>
       </div>
     </div>
   );

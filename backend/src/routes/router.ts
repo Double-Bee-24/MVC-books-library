@@ -4,7 +4,7 @@ import {
   increaseBookRate,
   searchBooks,
 } from '../controllers/BookController';
-import { login, logout, updateToken } from '../controllers/AuthController';
+import { login, updateToken } from '../controllers/AuthController';
 import { Connection } from 'mysql2/promise';
 
 const createRouter = (connection: Connection): Router => {
@@ -19,7 +19,6 @@ const createRouter = (connection: Connection): Router => {
 
   // Authorization
   router.post('/login', (req, res) => login(req, res, connection));
-  router.post('/logout', (req, res) => logout(req, res, connection));
   router.post('/refresh', (req, res) => updateToken(req, res, connection));
 
   return router;

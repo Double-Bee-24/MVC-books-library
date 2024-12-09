@@ -1,8 +1,9 @@
+import { Setter } from "../types/Setter";
+import IBookData from "./IBookData";
+
 export default interface IBookPreview {
-  authorNames: string;
-  title?: string;
-  bookId?: number;
-  clicks?: number;
-  year?: number;
-  viewsCount?: number;
+  bookData: IBookData;
+
+  setIsBookOpen?: Setter<boolean>;
+  setBookData?: Setter<IBookData>;
 }

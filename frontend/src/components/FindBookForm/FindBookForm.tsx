@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
-import IBookPreview from "../../interfaces/IBookPreview";
+import IFindBookForm from "../../interfaces/IFindBookForm";
 import { searchBooks } from "../../services/booksService";
 import "./FindBookForm.css";
-
-interface IFindBookForm {
-  setIsSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>;
-}
 
 export default function FindBookForm({
   setIsSearchActive,
   setBooksData,
+  setIsBookOpen,
 }: IFindBookForm): JSX.Element {
   const [searchString, setSearchString] = useState<string>("");
 
@@ -18,7 +14,6 @@ export default function FindBookForm({
     const fetchBooks = async () => {
       const data = await searchBooks(searchString);
       setBooksData(data);
-      console.log(data, "dog");
     };
 
     fetchBooks();
@@ -32,6 +27,7 @@ export default function FindBookForm({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    setIsBookOpen(false);
     setIsSearchActive(true);
   };
 

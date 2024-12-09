@@ -1,7 +1,7 @@
-import IBookPreview from "../../interfaces/IBookPreview";
+import IBookDetails from "../../interfaces/IBookDetails";
 import "./BookDetails.css";
 
-export default function BookDetails({ authorNames, year }: IBookPreview) {
+export default function BookDetails({ authorNames, year }: IBookDetails) {
   return (
     <div className="book-details">
       <p>

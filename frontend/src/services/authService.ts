@@ -8,9 +8,10 @@ const login = async (credentials: {
     const result = await instance.post("/login", credentials);
     const { refreshToken, accessToken } = result.data;
 
-    // Store tokens in browser memory
+    // Store tokens and status in browser memory
     localStorage.setItem("access_token", accessToken);
     localStorage.setItem("refresh_token", refreshToken);
+    localStorage.setItem("auth_status", "authorized");
 
     return "success";
   } catch (error) {
@@ -19,15 +20,13 @@ const login = async (credentials: {
   }
 };
 
-const logout = async (): Promise<string> => {
+const logout = async (): Promise<void> => {
   try {
-    const response = await instance.post("/logout");
-    const data: string = response.data;
-
-    return data;
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("auth_status");
   } catch (error) {
     console.error("Error while fetching books: ", error);
-    return "";
   }
 };
 

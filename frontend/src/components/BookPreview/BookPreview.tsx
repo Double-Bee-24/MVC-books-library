@@ -1,22 +1,25 @@
 // import { useState } from "react";
 import "./BookPreview.css";
 import IBookPreview from "../../interfaces/IBookPreview";
-import { useNavigate } from "react-router-dom";
 import { increaseBookRate } from "../../services/booksService";
 
 export default function BookPreview({
-  title,
-  authorNames,
-  year,
-  bookId,
+  bookData,
+  setIsBookOpen,
+  setBookData,
 }: IBookPreview): JSX.Element {
-  const navigate = useNavigate();
-
   const handleClick = (): void => {
-    if (bookId) {
-      increaseBookRate(bookId, { rate: "views" });
+    if (bookData.bookId) {
+      increaseBookRate(bookData.bookId, { rate: "views" });
     }
-    navigate("/book", { state: { title, authorNames, year, bookId } });
+    // navigate("/book", { state: { title, authorNames, year, bookId } });
+    if (setBookData) {
+      setBookData(bookData);
+    }
+    if (setIsBookOpen) {
+      setIsBookOpen(true);
+      console.log("loging");
+    }
   };
 
   return (
@@ -26,8 +29,8 @@ export default function BookPreview({
         alt="книжкова обкладинка"
         className="book-preview_cover"
       />
-      <p>{title}</p>
-      <p>{authorNames}</p>
+      <p>{bookData.title}</p>
+      <p>{bookData.authorNames}</p>
       <button>Читати</button>
     </div>
   );

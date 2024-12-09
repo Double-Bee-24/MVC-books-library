@@ -102,36 +102,4 @@ const updateToken = async (
   }
 };
 
-// Logout admin from the website
-const logout = async (req: Request, res: Response, connection: Connection) => {
-  try {
-    const authHeader = req.headers['authorization'];
-    if (!authHeader) {
-      res.status(400).json({ error: 'No token provided' });
-      return;
-    }
-
-    const token = authHeader.split(' ')[1]; // Bearer <token>
-
-    if (!token) {
-      res.status(400).json({ error: 'Token is missing' });
-      return;
-    }
-
-    const refreshSecretKey =
-      process.env.REFRESH_SECRET || 'default_refresh_key';
-
-    const decoded = jwt.verify(token, refreshSecretKey) as { login: string };
-
-    // Deletes refresh token from db
-    const adminId = await getAdminIdFromDb(decoded.login, connection);
-    await saveRefreshTokenToDb('', adminId, connection);
-
-    res.status(200).json({ message: 'Logout successful' });
-  } catch (error) {
-    console.error('Error while logging out: ', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-export { login, logout, updateToken };
+export { login, updateToken };

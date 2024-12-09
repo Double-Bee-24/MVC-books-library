@@ -1,20 +1,17 @@
-// import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import IHeader from "../../interfaces/IHeader";
 import FindBookForm from "../FindBookForm/FindBookForm";
 import "./Header.css";
-import React from "react";
-import IBookPreview from "../../interfaces/IBookPreview";
-
-interface IHeader {
-  setIsSearchActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>;
-}
 
 export default function Header({
   setIsSearchActive,
+  setIsBookOpen,
   setBooksData,
 }: IHeader): JSX.Element {
-  const navigate = useNavigate();
+  const handleNavigate = (): void => {
+    // Setting all open pages to false will redirect us to the main page by default
+    setIsBookOpen(false);
+    setIsSearchActive(false);
+  };
 
   return (
     <>
@@ -24,11 +21,12 @@ export default function Header({
             src="/assets/images/library.png"
             alt="значок бібліотеки"
             className="big-logo"
-            onClick={() => navigate("/")}
+            onClick={handleNavigate}
           />
           <FindBookForm
             setIsSearchActive={setIsSearchActive}
             setBooksData={setBooksData}
+            setIsBookOpen={setIsBookOpen}
           ></FindBookForm>
         </div>
         <hr />

@@ -32,3 +32,17 @@
 .admin-table {
   max-width: none;
 }
+
+.admin-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+
+.admin-buttons-container {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}

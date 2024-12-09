@@ -1,17 +1,21 @@
 import BookDetails from "../BookDetails/BookDetails";
 import BookAbout from "../BookAbout/BookAbout";
+import BookInfoModal from "../BookInfoModal/BookInfoModal";
 import { increaseBookRate } from "../../services/booksService";
+import { useState } from "react";
+import IBookDescription from "../../interfaces/IBookDescription";
 import "./BookDescription.css";
-import { useLocation } from "react-router-dom";
 
-export default function BookDescription(): JSX.Element {
-  const location = useLocation();
-  const { title, authorNames, year, bookId } = location.state || {};
+export default function BookDescription({
+  bookData,
+}: IBookDescription): JSX.Element {
+  const { bookId, title, authorNames, year } = bookData;
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleClick = (): void => {
     increaseBookRate(bookId, { rate: "clicks" });
+    setIsModalOpen(true);
   };
-  // console.log(bookId, "bookId");
 
   return (
     <div className="description-container">
@@ -21,6 +25,12 @@ export default function BookDescription(): JSX.Element {
         Хочу читати!
       </button>
       <BookAbout></BookAbout>
+      {isModalOpen && (
+        <BookInfoModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 }

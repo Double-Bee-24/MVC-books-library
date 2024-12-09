@@ -8,6 +8,8 @@ import App from "./App.tsx";
 import Book from "./pages/Book/Book.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Admin from "./pages/Admin/Admin.tsx";
+import { ProtectedRoute } from "./routes/ProtectedRoute.tsx";
+import { PublicRoute } from "./routes/PublicRoute.tsx";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +17,22 @@ const router = createBrowserRouter([
     element: <App />,
   },
   { path: "/book", element: <Book /> },
-  { path: "/login", element: <Login /> },
-  { path: "/admin", element: <Admin /> },
+  {
+    path: "/login",
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute>
+        <Admin />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

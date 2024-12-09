@@ -1,21 +1,16 @@
-import IBookPreview from "../../interfaces/IBookPreview";
+import IFoundBooksMain from "../../interfaces/IFoundBooksMain";
 import BookPreview from "../BookPreview/BookPreview";
 import "./FoundBooksMain.css";
 
-interface IFoundBooksMain {
-  booksData: IBookPreview[];
-}
-
 export default function FoundBooksMain({
   booksData,
+  setIsBookOpen,
 }: IFoundBooksMain): JSX.Element {
   const bookPreviews = booksData.map((item) => (
     <BookPreview
       key={item.bookId}
-      authorNames={item.authorNames}
-      title={item.title}
-      year={item.year}
-      bookId={item.bookId}
+      bookData={item}
+      setIsBookOpen={setIsBookOpen}
     ></BookPreview>
   ));
   return (
