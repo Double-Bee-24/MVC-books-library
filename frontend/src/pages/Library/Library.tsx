@@ -1,42 +1,29 @@
-import { useState } from "react";
-import BookMain from "../../components/BookMain/BookMain";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import Main from "../../components/Main/Main";
 import Footer from "../../components/Footer/Footer";
-import IBookPreview from "../../interfaces/IBookPreview";
-import FoundBooksMain from "../../components/FoundBooksMain/FoundBooksMain";
-import IBookData from "../../interfaces/IBookData";
+import ILibrary from "../../interfaces/ILibrary";
 import "./Library.css";
 
-export default function Library(): JSX.Element {
-  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
-  const [booksData, setBooksData] = useState<IBookPreview[]>([]);
-  const [isBookOpen, setIsBookOpen] = useState<boolean>(false);
-
-  const [bookData, setBookData] = useState<IBookData>({
-    authorNames: "default",
-    title: "default",
-    bookId: -1,
-    clicks: 0,
-    year: 0,
-    viewsCount: 0,
-  });
+export default function Library({
+  setIsSearchActive,
+  setIsBookOpen,
+  setBooksData,
+  isBookOpen,
+  isSearchActive,
+}: ILibrary): JSX.Element {
+  const navigate = useNavigate();
 
   // Choose which main part to display
-  const renderMain = () => {
+  useEffect(() => {
     if (isBookOpen) {
-      // navigate("/book");
-      return <BookMain bookData={bookData} />;
+      navigate("/book");
+    } else if (isSearchActive) {
+      navigate("/found-books");
+    } else {
+      navigate("/");
     }
-
-    if (isSearchActive) {
-      return (
-        <FoundBooksMain booksData={booksData} setIsBookOpen={setIsBookOpen} />
-      );
-    }
-
-    return <Main setIsBookOpen={setIsBookOpen} setBookData={setBookData} />;
-  };
+  }, [isBookOpen, isSearchActive, navigate]);
 
   return (
     <div className="library">
@@ -45,7 +32,7 @@ export default function Library(): JSX.Element {
         setIsBookOpen={setIsBookOpen}
         setBooksData={setBooksData}
       ></Header>
-      {renderMain()}
+      <Outlet></Outlet>
       <Footer />
     </div>
   );

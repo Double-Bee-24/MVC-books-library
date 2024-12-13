@@ -1,5 +1,6 @@
+import { error } from 'console';
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 // declare global {
 //   namespace Express {
@@ -33,7 +34,12 @@ const authenticationMiddleware = (
     const secretKey = process.env.JWT_SECRET || 'default_secret';
 
     // Check a token
-    jwt.verify(token, secretKey);
+    const decoded: string | JwtPayload = jwt.verify(token, secretKey);
+
+    if (typeof decoded === 'string' || decoded.role !== 'admin') {
+      res.status(403).json({ error: 'Forbidden' });
+      return;
+    }
 
     next();
   } catch (error) {

@@ -41,4 +41,39 @@ button:active {
 
 .book-preview p {
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+.book-preview p:hover::after {
+  content: attr(
+    data-fulltext
+  ); /* Використовуємо атрибут data-fulltext для збереження повного тексту */
+  position: absolute;
+  top: -25px; /* Розміщуємо підказку вище */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7); /* Чорний фон з напівпрозорістю */
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: normal; /* Дозволяємо переносити текст */
+  max-width: 250px; /* Максимальна ширина підказки */
+  text-align: center;
+  z-index: 10; /* Забезпечує, що підказка буде зверху */
+  visibility: visible; /* Підказка відображається тільки при hover */
+}
+
+.book-preview p::after {
+  visibility: hidden; /* Підказка прихована за замовчуванням */
+  opacity: 0; /* Стає прозорою */
+  transition: opacity 0.3s, visibility 0.3s; /* Додаємо плавний перехід */
+}
+
+.book-preview p:hover::after {
+  visibility: visible; /* Підказка з'являється при hover */
+  opacity: 1; /* Підказка стає видимою */
 }

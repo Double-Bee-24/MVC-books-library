@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { Request, Response } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { Response } from 'express';
 import {
   checkPassword,
   getAdminIdFromDb,
@@ -31,7 +31,7 @@ const login = async (
 
     const adminId = await getAdminIdFromDb(login, connection);
 
-    const payload = { login };
+    const payload = { login, role: 'admin' };
     const secretKey = process.env.JWT_SECRET || 'default key';
     const refreshSecretKey =
       process.env.REFRESH_SECRET || 'default_refresh_key';
@@ -71,21 +71,31 @@ const updateToken = async (
       process.env.REFRESH_SECRET || 'default_refresh_key';
 
     // Сheck refresh token
-    const decoded = jwt.verify(refreshToken, refreshSecretKey) as {
-      login: string;
-    };
+    const decoded: JwtPayload | string = jwt.verify(
+      refreshToken,
+      refreshSecretKey
+    );
 
+    if (typeof decoded === 'string') {
+      res.status(401).json({ error: 'Invalid refresh token' });
+      return;
+    }
+
+    if (typeof decoded.login !== 'string' || typeof decoded.role !== 'string') {
+      res.status(401).json({ error: 'Invalid refresh token payload' });
+      return;
+    }
+
+    const { login, role } = decoded;
     // Create new tokens
     const accessToken = jwt.sign(
-      { login: decoded.login },
+      { login, role },
       process.env.JWT_SECRET || 'default key',
       { expiresIn: '3m' }
     );
-    const newRefreshToken = jwt.sign(
-      { login: decoded.login },
-      refreshSecretKey,
-      { expiresIn: '7d' }
-    );
+    const newRefreshToken = jwt.sign({ login, role }, refreshSecretKey, {
+      expiresIn: '7d',
+    });
 
     // Refresh token in db
     const adminId = await getAdminIdFromDb(decoded.login, connection);
