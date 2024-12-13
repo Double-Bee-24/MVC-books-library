@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "../constants/api";
+import { updateToken } from "../services/authService";
 
 const instance = axios.create({
   baseURL: api.baseURL,
@@ -28,6 +29,53 @@ adminInstance.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Check for new jwt tokens if access token expired
+adminInstance.interceptors.response.use(
+  (response) => {
+    console.log("fishofishofish");
+    return response;
+  },
+  async (error) => {
+    console.log("fishofish");
+    const originalRequest = error.config;
+
+    console.log(originalRequest, "originalRequest");
+    if (
+      error.response &&
+      error.response.status === 403 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const oldRefreshToken = localStorage.getItem("refresh_token");
+
+        if (typeof oldRefreshToken !== "string") {
+          return;
+        }
+
+        const data = await updateToken(oldRefreshToken);
+
+        if (!data) {
+          return;
+        }
+        const { refreshToken, accessToken } = data;
+
+        localStorage.setItem("refresh_token", refreshToken);
+        localStorage.setItem("access_token", accessToken);
+
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
+        return adminInstance(originalRequest);
+      } catch (error) {
+        console.error("Interceptor token updating error", error);
+      }
+    }
+
     return Promise.reject(error);
   }
 );

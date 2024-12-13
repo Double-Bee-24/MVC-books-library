@@ -1,12 +1,17 @@
 import { instance } from "../api/axiosConfig";
 
+interface ITokens {
+  refreshToken: string;
+  accessToken: string;
+}
+
 const login = async (credentials: {
   login: string;
   password: string;
 }): Promise<string> => {
   try {
-    const result = await instance.post("/login", credentials);
-    const { refreshToken, accessToken } = result.data;
+    const response = await instance.post("/login", credentials);
+    const { refreshToken, accessToken } = response.data;
 
     // Store tokens and status in browser memory
     localStorage.setItem("access_token", accessToken);
@@ -30,4 +35,16 @@ const logout = async (): Promise<void> => {
   }
 };
 
-export { login, logout };
+// Retrieve new jwt tokens from server if possible
+const updateToken = async (refreshToken: string): Promise<ITokens | null> => {
+  try {
+    const response = await instance.post("/refresh", { refreshToken });
+    const data: ITokens = response.data;
+
+    return data;
+  } catch (error) {
+    console.error("Token updating error", error);
+    return null;
+  }
+};
+export { login, logout, updateToken };

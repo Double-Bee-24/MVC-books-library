@@ -21,9 +21,6 @@ const createAdmin = async (connection: Connection): Promise<void> => {
 
     // Creates once admin's data and inserts it to db
     if (adminExists) {
-      console.log(
-        'There is an admin with such login already. Nothing has happaned'
-      );
       return;
     }
 
@@ -37,8 +34,6 @@ const createAdmin = async (connection: Connection): Promise<void> => {
       process.env.ADMIN_LOGIN,
       hashedPassword,
     ]);
-
-    console.log('Admin created!');
   } catch (error) {
     console.error('Error while creating admin: ', error);
   }

@@ -21,9 +21,6 @@ export default function NavigationPanel({
         ? displayedBooksCount + 20
         : totalBooksCount;
 
-    console.log(displayedBooksCount + 20, "totalbookscount");
-    console.log(newOffset, "newoffset");
-
     setOffset(newOffset);
   };
 

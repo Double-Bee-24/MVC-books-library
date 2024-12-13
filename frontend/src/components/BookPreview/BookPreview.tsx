@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import "./BookPreview.css";
 import IBookPreview from "../../interfaces/IBookPreview";
 import { increaseBookRate } from "../../services/booksService";
@@ -12,13 +11,11 @@ export default function BookPreview({
     if (bookData.bookId) {
       increaseBookRate(bookData.bookId, { rate: "views" });
     }
-    // navigate("/book", { state: { title, authorNames, year, bookId } });
     if (setBookData) {
       setBookData(bookData);
     }
     if (setIsBookOpen) {
       setIsBookOpen(true);
-      console.log("loging");
     }
   };
 

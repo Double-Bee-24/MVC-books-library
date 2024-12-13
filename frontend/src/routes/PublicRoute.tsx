@@ -7,7 +7,6 @@ interface PublicRouteProps {
 // Available only for unauthorized user
 export function PublicRoute({ children }: PublicRouteProps): JSX.Element {
   const authorizationStatus = localStorage.getItem("auth_status");
-  console.log(authorizationStatus, "public route");
 
   if (authorizationStatus === "authorized") {
     return <Navigate to="/admin" />;

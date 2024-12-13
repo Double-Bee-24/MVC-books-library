@@ -1,9 +1,8 @@
 import fs from 'fs';
 import { Connection } from 'mysql2/promise';
 import path from 'path';
-// import createConnection from './config/database';
 
-const migrationsPath = path.join(__dirname, './migrations');
+const migrationsPath = path.join(__dirname, '../migrations');
 
 export default async function runMigrations(connection: Connection) {
   try {
@@ -47,7 +46,6 @@ export default async function runMigrations(connection: Connection) {
 
       await connection.query(sql);
 
-      console.log(file);
       await connection.query(
         'INSERT INTO migrations (migration_name) VALUES (?);',
         [file]

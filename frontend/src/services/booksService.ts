@@ -1,12 +1,6 @@
 import { instance, adminInstance } from "../api/axiosConfig";
+import IGetBooksParams from "../interfaces/IGetBooksParams";
 import IBookData from "../interfaces/IBookData";
-
-interface IGetBooksParams {
-  offset?: number | string;
-  search?: string;
-  author?: number;
-  year?: number;
-}
 
 // Fetches books from server
 const getBooks = async (
@@ -41,7 +35,6 @@ const increaseBookRate = async (
 };
 
 const createBook = async (bookData: IBookData): Promise<void> => {
-  console.log(bookData, " book data before sending");
   try {
     await adminInstance.post(`/books`, bookData);
   } catch (error) {

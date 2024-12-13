@@ -1,11 +1,12 @@
 import express from 'express';
 import createAdmin from './scripts/createAdmin';
 import bodyParser from 'body-parser';
-import runMigrations from './migrate';
+import runMigrations from './scripts/migrate';
 import dotenv from 'dotenv';
 import createConnection from './config/database';
 import { createRouter } from './routes/router';
 import { createAdminRouter } from './routes/adminRouter';
+import runSchedule from './scripts/runSchedule';
 
 // Need to access env variable safely
 dotenv.config();
@@ -30,6 +31,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use('/admin/api/v1', adminRouter);
   app.use('/api/v1', router);
+
+  // Performs scheduled backups and complete deletions
+  runSchedule(connection);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
