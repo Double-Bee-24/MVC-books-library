@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import IBookPreview from "../../interfaces/IBookPreview";
 import { createBook, deleteBook, getBooks } from "../../services/booksService";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./Admin.css";
 import { logout } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import IBookData from "../../interfaces/IBookData";
 
 const fetchBooks = async (
-  setBooksData: React.Dispatch<React.SetStateAction<IBookPreview[]>>,
+  setBooksData: React.Dispatch<React.SetStateAction<IBookData[]>>,
   setTablePages: React.Dispatch<React.SetStateAction<number[]>>
 ) => {
   const { books } = await getBooks({ offset: "max" });
@@ -22,7 +22,7 @@ const fetchBooks = async (
 };
 
 export default function Admin(): JSX.Element {
-  const [booksData, setBooksData] = useState<IBookPreview[]>([]);
+  const [booksData, setBooksData] = useState<IBookData[]>([]);
   const [tablePages, setTablePages] = useState<number[]>([]);
   const [openTablePage, setOpenTablePage] = useState<number>(1);
   const [newBookData, setNewBookData] = useState<{

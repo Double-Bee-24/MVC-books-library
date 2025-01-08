@@ -8,7 +8,7 @@ const createAdmin = async (connection: Connection): Promise<void> => {
   try {
     if (!process.env.ADMIN_LOGIN || !process.env.ADMIN_PASSWORD) {
       throw new Error(
-        'ADMIN_LOGIN та ADMIN_PASSWORD must be included in .env file'
+        'ADMIN_LOGIN and ADMIN_PASSWORD must be included in .env file'
       );
     }
 

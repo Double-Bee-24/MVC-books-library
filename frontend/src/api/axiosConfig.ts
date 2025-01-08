@@ -36,14 +36,11 @@ adminInstance.interceptors.request.use(
 // Check for new jwt tokens if access token expired
 adminInstance.interceptors.response.use(
   (response) => {
-    console.log("fishofishofish");
     return response;
   },
   async (error) => {
-    console.log("fishofish");
     const originalRequest = error.config;
 
-    console.log(originalRequest, "originalRequest");
     if (
       error.response &&
       error.response.status === 403 &&

@@ -36,7 +36,7 @@ const login = async (
     const refreshSecretKey =
       process.env.REFRESH_SECRET || 'default_refresh_key';
 
-    const accessToken = jwt.sign(payload, secretKey, { expiresIn: '3m' });
+    const accessToken = jwt.sign(payload, secretKey, { expiresIn: '1h' });
     const refreshToken = jwt.sign(payload, refreshSecretKey, {
       expiresIn: '7d',
     });
