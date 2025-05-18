@@ -1,8 +1,8 @@
 import express from 'express';
-import createAdmin from './scripts/createAdmin';
-import bodyParser from 'body-parser';
-import runMigrations from './scripts/migrate';
 import dotenv from 'dotenv';
+
+import createAdmin from './scripts/createAdmin';
+import runMigrations from './scripts/migrate';
 import createConnection from './config/database';
 import { createRouter } from './routes/router';
 import { createAdminRouter } from './routes/adminRouter';
@@ -15,10 +15,10 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 
 // Provide correct reading of requests
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-(async (): Promise<void> => {
+const startServer = async (): Promise<void> => {
   const connection = await createConnection();
 
   // Executes sql commands to configure database
@@ -38,4 +38,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
   app.listen(PORT, () => {
     console.log(`Server is running on port http://localhost:${PORT}`);
   });
-})();
+};
+
+startServer().catch((err) => console.log('Error during bootstrapping: ', err));

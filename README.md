@@ -1,4 +1,5 @@
 ﻿# 3.2-MVC-books-library
+
 # Book Library Management System
 
 ## Overview
@@ -25,25 +26,32 @@ This project is a simple Book Library Management System built using the MVC (Mod
 ## Setup
 
 ### 1. Clone the repository
+
 ```bash
 git clone https://github.com/Double-Bee-24/3.2-MVC-books-library.git
 ```
 
 ### 2. Install dependencies in both 'frontend' and 'backend' folders
+
 ```bash
 npm i
 ```
 
-### 3. Set up database 
+### 3. Set up database
+
 Create mySql database named mvc_library (you can use your own name, but make sure you set your DB_NAME in backend .env to this value)
 
 ### 4. Create and configure .env file in the backend and frontend directories
+
 'Frontend' directory should include next lines in .env file:
+
 ```bash
  VITE_BASE_API_URL=http://localhost:3000/api/v1
  VITE_ADMIN_API_URL=http://localhost:3000/admin/api/v1
 ```
-'Backend' directory should include next .env file: 
+
+'Backend' directory should include next .env file:
+
 ```bash
 PORT=5000
 DB_HOST=localhost
@@ -55,13 +63,14 @@ ADMIN_PASSWORD="&S8f^k2#JpR$L9z@X7g!"
 JWT_SECRET="don't tell anyone"
 REFRESH_SECRET="orange strawberry juice"
 ```
-*DB_USER* (by default set to 'root') and *DB_PASSWORD* fields should contain your own database data. You also can change other fields and app would use your variables instead.
-Access to the admin panel requires *ADMIN_LOGIN/PASSWORD* to be entered to the login fields  
 
-### 5. Run app 
+_DB_USER_ (by default set to 'root') and _DB_PASSWORD_ fields should contain your own database data. You also can change other fields and app would use your variables instead.
+Access to the admin panel requires _ADMIN_LOGIN/PASSWORD_ to be entered to the login fields
+
+### 5. Run app
+
 Create two terminals, enter to the folders of both backend and frontend and use next command:
+
 ```bash
 npm run dev
 ```
-
-

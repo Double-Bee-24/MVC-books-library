@@ -1,6 +1,15 @@
 import { Connection } from 'mysql2/promise';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
+interface BookWithAuthor extends RowDataPacket {
+  bookId: string;
+  title: string;
+  year: string;
+  clicks: number;
+  viewsCount: number;
+  authorNames: string;
+}
+
 const getBooksWithAuthorsFromDb = async (
   limit: string | number,
   connection: Connection
@@ -8,7 +17,7 @@ const getBooksWithAuthorsFromDb = async (
   // If we want to get all the data
   const isMax = limit === 'max';
 
-  const [rows] = await connection.query(
+  const [rows] = await connection.query<BookWithAuthor[]>(
     `
       SELECT
         books.id AS bookId,
