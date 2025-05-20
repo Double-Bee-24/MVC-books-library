@@ -2,7 +2,7 @@ import fs from 'fs';
 import { Connection } from 'mysql2/promise';
 import path from 'path';
 
-const migrationsPath = path.join(__dirname, '../migrations');
+const migrationsPath = path.join(__dirname, '../../migrations');
 
 export default async function runMigrations(connection: Connection) {
   try {
