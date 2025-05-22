@@ -2,6 +2,7 @@ import { Connection } from 'mysql2/promise';
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
 import cron from 'node-cron';
+import { logger } from '../config/logger';
 
 const BACKUP_DIR = './backups';
 
@@ -22,7 +23,7 @@ const makeBackup = (): void => {
     // Create directory for backups
     exec(`mkdir -p ${BACKUP_DIR}`, (err) => {
       if (err) {
-        console.error('Backup directory creating error: ', err);
+        logger.error('Backup directory creating error: ', err);
         return;
       }
 
@@ -31,9 +32,9 @@ const makeBackup = (): void => {
         `MYSQL_PWD="${process.env.DB_PASSWORD}" mysqldump -u ${process.env.DB_USER} ${process.env.DB_NAME} > ${backupFile}`,
         (err) => {
           if (err) {
-            console.error('Backup creating error: ', err);
+            logger.error('Backup creating error: ', err);
           } else {
-            console.log(`Backup created successfully: ${backupFile}`);
+            logger.info(`Backup created successfully: ${backupFile}`);
           }
         }
       );
@@ -60,9 +61,9 @@ const performSoftDeletion = (connection: Connection): void => {
           AND updated_at <= NOW() - INTERVAL 24 HOUR;
       `);
 
-      console.log('Deleted books removed from db successfully');
+      logger.info('Deleted books removed from db successfully');
     } catch (error) {
-      console.error('Error during deletion', error);
+      logger.error('Error during deletion', error);
     }
   });
 };

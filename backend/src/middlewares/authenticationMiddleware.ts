@@ -1,6 +1,6 @@
-import { error } from 'console';
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { logger } from '../config/logger';
 
 // declare global {
 //   namespace Express {
@@ -43,7 +43,7 @@ const authenticationMiddleware = (
 
     next();
   } catch (error) {
-    console.error('Invalid token:', error);
+    logger.error('Invalid token:', error);
     res.status(403).json({ error: 'Invalid token' });
     return;
   }

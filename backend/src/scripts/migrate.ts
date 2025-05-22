@@ -1,18 +1,19 @@
-import fs from 'fs';
-import { Connection } from 'mysql2/promise';
+import * as fs from 'node:fs/promises';
 import path from 'path';
+import { Connection } from 'mysql2/promise';
+import { logger } from '../config/logger';
 
 const migrationsPath = path.join(__dirname, '../../migrations');
 
 export default async function runMigrations(connection: Connection) {
   try {
     // Get all files from "./migrations"
-    const files = fs
-      .readdirSync(migrationsPath)
-      .filter((file) => file.endsWith('.sql'));
+    const files = await fs.readdir(migrationsPath);
 
-    if (files.length === 0) {
-      console.log('No migration files found.');
+    const filteredFiles = files.filter((file) => file.endsWith('.sql'));
+
+    if (filteredFiles.length === 0) {
+      logger.info('No migration files found.');
       return;
     }
 
@@ -33,16 +34,16 @@ export default async function runMigrations(connection: Connection) {
       (row: any) => row.migration_name
     );
 
-    for (const file of files) {
+    for (const file of filteredFiles) {
       if (executedNames.includes(file)) {
         continue;
       }
 
       const filePath = path.join(migrationsPath, file);
 
-      const sql = fs.readFileSync(filePath, 'utf-8');
+      const sql = await fs.readFile(filePath, 'utf-8');
 
-      console.log(`Executing migration: ${file}`);
+      logger.info(`Executing migration: ${file}`);
 
       await connection.query(sql);
 
@@ -52,6 +53,6 @@ export default async function runMigrations(connection: Connection) {
       );
     }
   } catch (error) {
-    console.error('Error executing migrations:', error);
+    logger.error('Error executing migrations:', error);
   }
 }

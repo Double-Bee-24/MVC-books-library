@@ -9,12 +9,12 @@ import createConnection from './config/database';
 import { createRouter } from './routes/router';
 import { createAdminRouter } from './routes/adminRouter';
 import runSchedule from './scripts/runSchedule';
-import { getDevLogger, getLogflareLogger } from './config/getLogger';
+import { logger } from './config/logger';
 
-// Need to access env variable safely
 dotenv.config();
+// Need to access env variable safely
 
-const { NODE_ENV = 'dev', PORT = 5000 } = process.env;
+const { PORT = 5000 } = process.env;
 
 const app = express();
 
@@ -22,11 +22,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const logger = NODE_ENV === 'prod' ? getLogflareLogger() : getDevLogger();
-
 // Use the same logger as middleware for logging http requests and as a standalone logger
 const httpLogger = pinoHttp({
   logger: logger,
+  redact: {
+    paths: [
+      'req.headers.authorization',
+      'req.headers.cookie',
+      'req.body.password',
+    ],
+    censor: '[REDACTED]',
+  },
 });
 app.use(httpLogger);
 

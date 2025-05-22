@@ -10,6 +10,7 @@ import TypedRequestBody from '../interfaces/TypedRequestBody';
 import ILoginBody from '../interfaces/ILoginBody';
 import IRefresshToken from '../interfaces/IRefreshToken';
 import { Connection } from 'mysql2/promise';
+import { logger } from '../config/logger';
 
 // Login admin to website
 const login = async (
@@ -49,7 +50,7 @@ const login = async (
       accessToken,
     });
   } catch (error) {
-    console.error('Error while logging in: ', error);
+    logger.error('Error while logging in: ', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -107,7 +108,7 @@ const updateToken = async (
       refreshToken: newRefreshToken,
     });
   } catch (error) {
-    console.error('Error during token update: ', error);
+    logger.error('Error during token update: ', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

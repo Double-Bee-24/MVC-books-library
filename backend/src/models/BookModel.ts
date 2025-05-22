@@ -1,5 +1,6 @@
 import { Connection } from 'mysql2/promise';
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { logger } from '../config/logger';
 
 interface BookWithAuthor extends RowDataPacket {
   bookId: string;
@@ -128,7 +129,7 @@ const addBookToDb = async (
       );
     }
   } catch (error) {
-    console.error('Error while adding book and authors: ', error);
+    logger.error('Error while adding book and authors: ', error);
   }
 };
 

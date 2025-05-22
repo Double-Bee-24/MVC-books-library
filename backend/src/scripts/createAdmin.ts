@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { Connection, RowDataPacket } from 'mysql2/promise';
+import { logger } from '../config/logger';
 
 // Creates anadmin in db with authorization data from .env
 const createAdmin = async (connection: Connection): Promise<void> => {
@@ -35,7 +36,7 @@ const createAdmin = async (connection: Connection): Promise<void> => {
       hashedPassword,
     ]);
   } catch (error) {
-    console.error('Error while creating admin: ', error);
+    logger.error('Error while creating admin: ', error);
   }
 };
 
