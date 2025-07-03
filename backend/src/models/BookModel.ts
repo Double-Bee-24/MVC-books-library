@@ -43,7 +43,7 @@ const getBooksWithAuthorsFromDb = async (
 
 const getTotalBooksCount = async (connection: Connection): Promise<number> => {
   const [rows] = await connection.query(
-    `SELECT COUNT(*) AS totalBooks FROM books WHERE is_deleted = FALSE;`
+    'SELECT COUNT(*) AS totalBooks FROM books WHERE is_deleted = FALSE;'
   );
 
   const totalBooks = (rows as [{ totalBooks: number }])[0].totalBooks;
@@ -52,7 +52,7 @@ const getTotalBooksCount = async (connection: Connection): Promise<number> => {
 };
 
 const deleteBookFromDb = async (bookId: number, connection: Connection) => {
-  await connection.query(`UPDATE books SET is_deleted = TRUE WHERE id = ?`, [
+  await connection.query('UPDATE books SET is_deleted = TRUE WHERE id = ?', [
     bookId,
   ]);
 };
@@ -60,7 +60,7 @@ const deleteBookFromDb = async (bookId: number, connection: Connection) => {
 // Increase clicks field in db to show rate of a book on admins page
 const increaseClicksInDb = async (bookId: number, connection: Connection) => {
   await connection.query(
-    `UPDATE books SET clicks_count = clicks_count + 1 WHERE id = ?`,
+    'UPDATE books SET clicks_count = clicks_count + 1 WHERE id = ?',
     [bookId]
   );
 };
@@ -68,7 +68,7 @@ const increaseClicksInDb = async (bookId: number, connection: Connection) => {
 // Increase view field in db to show rate of a book on admins page
 const increaseViewsInDb = async (bookId: number, connection: Connection) => {
   await connection.query(
-    `UPDATE books SET views_count = views_count + 1 WHERE id = ?`,
+    'UPDATE books SET views_count = views_count + 1 WHERE id = ?',
     [bookId]
   );
 };

@@ -11,7 +11,6 @@ import { createAdminRouter } from './routes/adminRouter';
 import runSchedule from './scripts/runSchedule';
 import { logger } from './config/logger';
 
-console.log('hello');
 dotenv.config();
 // Need to access env variable safely
 
@@ -59,4 +58,4 @@ const startServer = async (): Promise<void> => {
   });
 };
 
-startServer().catch((err) => logger.info('Error during bootstrapping: ', err));
+startServer().catch(err => logger.info('Error during bootstrapping: ', err));

@@ -52,6 +52,7 @@ export default [
   // Common rules for all files
   {
     files: ['src/**/*.{js,ts,mjs,cjs}'],
+    ignores: ['**/*.d.ts'],
     rules: {
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
