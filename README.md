@@ -1,6 +1,4 @@
-﻿# 3.2-MVC-books-library
-
-# Book Library Management System
+﻿# Book Library Management System
 
 ## Overview
 
