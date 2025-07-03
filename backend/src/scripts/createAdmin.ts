@@ -13,7 +13,7 @@ const createAdmin = async (connection: Connection): Promise<void> => {
       );
     }
 
-    const checkQuery = `SELECT COUNT(*) AS count FROM admins WHERE login = ?`;
+    const checkQuery = 'SELECT COUNT(*) AS count FROM admins WHERE login = ?';
     const [rows] = await connection.execute<RowDataPacket[]>(checkQuery, [
       process.env.ADMIN_LOGIN,
     ]);
