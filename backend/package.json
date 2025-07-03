@@ -11,7 +11,8 @@
     "start:prod": "cross-env NODE_ENV=prod node --env-file=.env dist/server.js",
     "start:dev": "cross-env NODE_ENV=dev node --trace-warnings --watch --env-file=.env --experimental-strip-types src/server.ts",
     "build-and-start": "npm run build && npm run start:prod",
-    "lint": "eslint . --ext .ts,.js,.mjs,.cjs",
+    "lint": "eslint --config eslint.config.mjs \"src/**/*.{js,ts}\"",
+    "lint:fix": "eslint --config eslint.config.mjs --fix \"src/**/*.{js,ts}\"",
     "prepare": "husky"
   },
   "keywords": [],
