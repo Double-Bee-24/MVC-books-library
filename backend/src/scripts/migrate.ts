@@ -58,7 +58,7 @@ export default async function runMigrations(connection: Connection) {
         [file]
       );
     }
-  } catch (error) {
-    logger.error('Error executing migrations:', error);
+  } catch (err) {
+    logger.error({ message: 'Error executing migrations:', err });
   }
 }

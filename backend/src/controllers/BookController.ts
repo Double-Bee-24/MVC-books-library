@@ -28,8 +28,8 @@ const getBooks = async (
     const totalBooksCount = await getTotalBooksCount(connection);
 
     res.status(200).json({ books, totalBooksCount });
-  } catch (error) {
-    logger.error('error during sending books: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error during sending books: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -45,8 +45,8 @@ const deleteBook = async (
     await deleteBookFromDb(Number(bookId), connection);
 
     res.status(200).json({ message: `Deleted succesfully! Id: ${bookId}` });
-  } catch (error) {
-    logger.error('error during deleting books: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error during deleting books: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -69,8 +69,8 @@ const increaseBookRate = async (
     }
 
     res.status(200).json({ message: `Book rate increased: ${bookId}` });
-  } catch (error) {
-    logger.error('Error during increasing click rate: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error during increasing click rate: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -83,8 +83,8 @@ const addBook = async (req: Request, res: Response, connection: Connection) => {
       { ...bookData, authorNames: bookData.authorNames.split(',') },
       connection
     );
-  } catch (error) {
-    logger.error('Error during adding a new book: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error during adding a new book: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -105,8 +105,8 @@ const searchBooks = async (
     const foundBooks = await searchBooksInDb(searchString, connection);
 
     res.status(200).json(foundBooks);
-  } catch (error) {
-    logger.error('Error during searching books:', error);
+  } catch (err) {
+    logger.error({ message: 'Error during searching books:', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };

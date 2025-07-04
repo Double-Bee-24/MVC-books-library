@@ -36,8 +36,8 @@ const createAdmin = async (connection: Connection): Promise<void> => {
       process.env.ADMIN_LOGIN,
       hashedPassword,
     ]);
-  } catch (error) {
-    logger.error('Error while creating admin: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error while creating admin: ', err });
   }
 };
 

@@ -56,4 +56,6 @@ const startServer = async (): Promise<void> => {
   });
 };
 
-startServer().catch(err => logger.info('Error during bootstrapping: ', err));
+startServer().catch(err =>
+  logger.error({ message: 'Error during bootstrapping', err })
+);

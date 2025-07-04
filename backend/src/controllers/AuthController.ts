@@ -51,8 +51,8 @@ const login = async (
       refreshToken,
       accessToken,
     });
-  } catch (error) {
-    logger.error('Error while logging in: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error while logging in: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -109,8 +109,8 @@ const updateToken = async (
       accessToken,
       refreshToken: newRefreshToken,
     });
-  } catch (error) {
-    logger.error('Error during token update: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error during token update: ', err });
     res.status(500).json({ error: 'Internal server error' });
   }
 };

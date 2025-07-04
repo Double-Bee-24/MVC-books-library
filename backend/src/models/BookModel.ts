@@ -129,8 +129,8 @@ const addBookToDb = async (
         [bookId, authorId]
       );
     }
-  } catch (error) {
-    logger.error('Error while adding book and authors: ', error);
+  } catch (err) {
+    logger.error({ message: 'Error while adding book and authors: ', err });
   }
 };
 

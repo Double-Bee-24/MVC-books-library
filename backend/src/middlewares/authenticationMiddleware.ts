@@ -44,8 +44,8 @@ const authenticationMiddleware = (
     }
 
     next();
-  } catch (error) {
-    logger.error('Invalid token:', error);
+  } catch (err) {
+    logger.error({ message: 'Invalid token:', err });
     res.status(403).json({ error: 'Invalid token' });
     return;
   }

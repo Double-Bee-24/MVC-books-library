@@ -25,7 +25,7 @@ const makeBackup = (): void => {
     // Create directory for backups
     exec(`mkdir -p ${BACKUP_DIR}`, err => {
       if (err) {
-        logger.error('Backup directory creating error: ', err);
+        logger.error({ message: 'Backup directory creating error: ', err });
         return;
       }
 
@@ -34,7 +34,7 @@ const makeBackup = (): void => {
         `MYSQL_PWD="${process.env.DB_PASSWORD}" mysqldump -u ${process.env.DB_USER} ${process.env.DB_NAME} > ${backupFile}`,
         err => {
           if (err) {
-            logger.error('Backup creating error: ', err);
+            logger.error({ message: 'Backup creating error: ', err });
           } else {
             logger.info(`Backup created successfully: ${backupFile}`);
           }
@@ -64,8 +64,8 @@ const performSoftDeletion = (connection: Connection): void => {
       `);
 
       logger.info('Deleted books removed from db successfully');
-    } catch (error) {
-      logger.error('Error during deletion', error);
+    } catch (err) {
+      logger.error({ message: 'Error during deletion', err });
     }
   });
 };
