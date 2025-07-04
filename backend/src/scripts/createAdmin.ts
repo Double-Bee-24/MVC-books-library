@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { Connection, RowDataPacket } from 'mysql2/promise';
+import type { Connection, RowDataPacket } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
 

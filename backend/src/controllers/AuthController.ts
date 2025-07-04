@@ -1,12 +1,13 @@
 import dotenv from 'dotenv';
-import { Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { Connection } from 'mysql2/promise';
+import type { Response } from 'express';
+import type { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
+import type { Connection } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
-import ILoginBody from '../interfaces/ILoginBody';
-import IRefresshToken from '../interfaces/IRefreshToken';
-import TypedRequestBody from '../interfaces/TypedRequestBody';
+import type ILoginBody from '../interfaces/ILoginBody';
+import type IRefresshToken from '../interfaces/IRefreshToken';
+import type TypedRequestBody from '../interfaces/TypedRequestBody';
 import {
   checkPassword,
   getAdminIdFromDb,

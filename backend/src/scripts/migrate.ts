@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import path from 'path';
 
-import { Connection, RowDataPacket } from 'mysql2/promise';
+import type { Connection, RowDataPacket } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
 

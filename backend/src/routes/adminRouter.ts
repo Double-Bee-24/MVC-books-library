@@ -1,5 +1,6 @@
-import express, { Router } from 'express';
-import { Connection } from 'mysql2/promise';
+import type { Router } from 'express';
+import express from 'express';
+import type { Connection } from 'mysql2/promise';
 
 import { deleteBook, addBook } from '../controllers/BookController';
 import authenticationMiddleware from '../middlewares/authenticationMiddleware';

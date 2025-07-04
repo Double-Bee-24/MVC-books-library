@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { Connection } from 'mysql2/promise';
+import type { Request, Response } from 'express';
+import type { Connection } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
 import {

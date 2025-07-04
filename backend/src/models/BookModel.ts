@@ -1,5 +1,5 @@
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
-import { Connection } from 'mysql2/promise';
+import type { ResultSetHeader, RowDataPacket } from 'mysql2';
+import type { Connection } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
 

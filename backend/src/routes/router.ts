@@ -1,5 +1,6 @@
-import express, { Router } from 'express';
-import { Connection } from 'mysql2/promise';
+import type { Router } from 'express';
+import express from 'express';
+import type { Connection } from 'mysql2/promise';
 
 import { login, updateToken } from '../controllers/AuthController';
 import {

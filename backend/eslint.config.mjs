@@ -35,13 +35,15 @@ export default [
         project: './tsconfig.json', // Specify your tsconfig for type-aware rules
       },
     },
-    // Plugins are typically defined where their rules are used, or globally if they provide configurations to spread
-    // We'll define import plugin in the common section where import rules are applied to both js and ts.
     rules: {
       // Add or override TS-specific rules here
       'no-console': 'warn', // Keep console warning
       // Override rules from strict config for more strictness
       '@typescript-eslint/no-explicit-any': 'error', // Disallow 'any' type
+
+      // REQUIRE USING 'import type'
+      '@typescript-eslint/consistent-type-imports': 'error',
+
       // Note: Many strict rules are now included from ...tseslint.configs.strict
     },
   },

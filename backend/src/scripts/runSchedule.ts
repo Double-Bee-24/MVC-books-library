@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 
 import dotenv from 'dotenv';
-import { Connection } from 'mysql2/promise';
+import type { Connection } from 'mysql2/promise';
 import cron from 'node-cron';
 
 import { logger } from '../config/logger';
