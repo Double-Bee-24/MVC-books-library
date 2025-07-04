@@ -1,11 +1,12 @@
-import express, { Response, Router } from 'express';
+import express, { Router } from 'express';
+import { Connection } from 'mysql2/promise';
+
+import { login, updateToken } from '../controllers/AuthController';
 import {
   getBooks,
   increaseBookRate,
   searchBooks,
 } from '../controllers/BookController';
-import { login, updateToken } from '../controllers/AuthController';
-import { Connection } from 'mysql2/promise';
 
 const createRouter = (connection: Connection): Router => {
   const router = express.Router();

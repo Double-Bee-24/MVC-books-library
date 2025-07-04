@@ -1,6 +1,7 @@
-import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 import { Connection, RowDataPacket } from 'mysql2/promise';
+
 import { logger } from '../config/logger';
 
 // Creates anadmin in db with authorization data from .env

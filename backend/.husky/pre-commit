@@ -1,2 +1,2 @@
-echo 'hello'
-npx lint-staged
+echo 'cd backend && npx lint-staged' > ../.husky/pre-commit
+chmod +x ../.husky/pre-commit

@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { Connection } from 'mysql2/promise';
+
+import { logger } from '../config/logger';
 import {
   getBooksWithAuthorsFromDb,
   deleteBookFromDb,
@@ -9,7 +11,6 @@ import {
   getTotalBooksCount,
   searchBooksInDb,
 } from '../models/BookModel';
-import { logger } from '../config/logger';
 
 const getBooks = async (
   req: Request,

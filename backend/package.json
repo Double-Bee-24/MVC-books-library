@@ -13,7 +13,7 @@
     "build-and-start": "npm run build && npm run start:prod",
     "lint": "eslint --config eslint.config.mjs \"src/**/*.{js,ts}\"",
     "lint:fix": "eslint --config eslint.config.mjs --fix \"src/**/*.{js,ts}\"",
-    "prepare": "husky"
+    "prepare": "cd .. && husky backend/.husky"
   },
   "keywords": [],
   "author": "",

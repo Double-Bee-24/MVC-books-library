@@ -1,19 +1,17 @@
-import express from 'express';
 import dotenv from 'dotenv';
-
+import express from 'express';
 import { pinoHttp } from 'pino-http';
 
+import createConnection from './config/database';
+import { logger } from './config/logger';
+import { createAdminRouter } from './routes/adminRouter';
+import { createRouter } from './routes/router';
 import createAdmin from './scripts/createAdmin';
 import runMigrations from './scripts/migrate';
-import createConnection from './config/database';
-import { createRouter } from './routes/router';
-import { createAdminRouter } from './routes/adminRouter';
 import runSchedule from './scripts/runSchedule';
-import { logger } from './config/logger';
 
 dotenv.config();
 // Need to access env variable safely
-const aadfsadfadad;
 const { PORT = 5000 } = process.env;
 
 const app = express();

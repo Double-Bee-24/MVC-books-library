@@ -1,5 +1,5 @@
-import { RowDataPacket } from 'mysql2';
 import bcrypt from 'bcrypt';
+import { RowDataPacket } from 'mysql2';
 import { Connection } from 'mysql2/promise';
 
 const checkPassword = async (

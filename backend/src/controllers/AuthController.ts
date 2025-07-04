@@ -1,16 +1,17 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import { Response } from 'express';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { Connection } from 'mysql2/promise';
+
+import { logger } from '../config/logger';
+import ILoginBody from '../interfaces/ILoginBody';
+import IRefresshToken from '../interfaces/IRefreshToken';
+import TypedRequestBody from '../interfaces/TypedRequestBody';
 import {
   checkPassword,
   getAdminIdFromDb,
   saveRefreshTokenToDb,
 } from '../models/AuthModel';
-import dotenv from 'dotenv';
-import TypedRequestBody from '../interfaces/TypedRequestBody';
-import ILoginBody from '../interfaces/ILoginBody';
-import IRefresshToken from '../interfaces/IRefreshToken';
-import { Connection } from 'mysql2/promise';
-import { logger } from '../config/logger';
 
 // Login admin to website
 const login = async (

@@ -1,7 +1,13 @@
 import * as fs from 'node:fs/promises';
 import path from 'path';
-import { Connection } from 'mysql2/promise';
+
+import { Connection, RowDataPacket } from 'mysql2/promise';
+
 import { logger } from '../config/logger';
+
+interface Migration extends RowDataPacket {
+  migration_name: string;
+}
 
 const migrationsPath = path.join(__dirname, '../../migrations');
 
@@ -10,7 +16,7 @@ export default async function runMigrations(connection: Connection) {
     // Get all files from "./migrations"
     const files = await fs.readdir(migrationsPath);
 
-    const filteredFiles = files.filter((file) => file.endsWith('.sql'));
+    const filteredFiles = files.filter(file => file.endsWith('.sql'));
 
     if (filteredFiles.length === 0) {
       logger.info('No migration files found.');
@@ -27,11 +33,11 @@ export default async function runMigrations(connection: Connection) {
     `);
 
     // Get already existing migrations list
-    const [executedMigrations]: any = await connection.query(
+    const [executedMigrations] = await connection.query<Migration[]>(
       'SELECT migration_name FROM migrations;'
     );
-    const executedNames = executedMigrations.map(
-      (row: any) => row.migration_name
+    const executedNames: string[] = executedMigrations.map(
+      (row: Migration) => row.migration_name
     );
 
     for (const file of filteredFiles) {

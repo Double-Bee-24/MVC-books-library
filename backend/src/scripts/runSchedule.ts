@@ -1,7 +1,9 @@
-import { Connection } from 'mysql2/promise';
 import { exec } from 'child_process';
+
 import dotenv from 'dotenv';
+import { Connection } from 'mysql2/promise';
 import cron from 'node-cron';
+
 import { logger } from '../config/logger';
 
 const BACKUP_DIR = './backups';
@@ -21,7 +23,7 @@ const makeBackup = (): void => {
     const backupFile = `${BACKUP_DIR}/${process.env.DB_NAME}_backup_${timestamp}.sql`;
 
     // Create directory for backups
-    exec(`mkdir -p ${BACKUP_DIR}`, (err) => {
+    exec(`mkdir -p ${BACKUP_DIR}`, err => {
       if (err) {
         logger.error('Backup directory creating error: ', err);
         return;
@@ -30,7 +32,7 @@ const makeBackup = (): void => {
       // Use MYSQL_PWD to securely pass the password
       exec(
         `MYSQL_PWD="${process.env.DB_PASSWORD}" mysqldump -u ${process.env.DB_USER} ${process.env.DB_NAME} > ${backupFile}`,
-        (err) => {
+        err => {
           if (err) {
             logger.error('Backup creating error: ', err);
           } else {
@@ -45,7 +47,7 @@ const makeBackup = (): void => {
 const performSoftDeletion = (connection: Connection): void => {
   cron.schedule('0 19 * * *', async () => {
     try {
-      const [rows] = await connection.execute(`
+      await connection.execute(`
         DELETE FROM book_authors
         WHERE book_id IN (
           SELECT id
@@ -55,7 +57,7 @@ const performSoftDeletion = (connection: Connection): void => {
         );
       `);
 
-      const [deletedBooks] = await connection.execute(`
+      await connection.execute(`
         DELETE FROM books
         WHERE is_deleted = TRUE
           AND updated_at <= NOW() - INTERVAL 24 HOUR;
