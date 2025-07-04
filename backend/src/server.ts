@@ -13,9 +13,8 @@ import { logger } from './config/logger';
 
 dotenv.config();
 // Need to access env variable safely
-
+const a;
 const { PORT = 5000 } = process.env;
-const alaladadf;
 
 const app = express();
 
