@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 import { pinoHttp } from 'pino-http';
 
-import createAdmin from './scripts/createAdmin.ts';
+import createAdmin from './scripts/createAdmin';
 import runMigrations from './scripts/migrate';
 import createConnection from './config/database';
 import { createRouter } from './routes/router';
