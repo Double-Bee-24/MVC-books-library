@@ -15,6 +15,7 @@ dotenv.config();
 // Need to access env variable safely
 
 const { PORT = 5000 } = process.env;
+const alal;
 
 const app = express();
 
