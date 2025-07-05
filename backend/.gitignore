@@ -1,11 +1,6 @@
-# Node.js dependencies
+backups/
+dist/
 node_modules/
 
-# Environment variables
 .env
 
-# Built project
-dist/
-
-# Backups
-backups

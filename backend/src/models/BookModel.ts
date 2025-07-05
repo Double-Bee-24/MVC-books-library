@@ -1,7 +1,10 @@
-import type { ResultSetHeader, RowDataPacket } from 'mysql2';
-import type { Connection } from 'mysql2/promise';
+import type {
+  Connection,
+  ResultSetHeader,
+  RowDataPacket,
+} from 'mysql2/promise';
 
-import { logger } from '../config/logger';
+import { logger } from '#config/logger';
 
 interface BookWithAuthor extends RowDataPacket {
   bookId: string;

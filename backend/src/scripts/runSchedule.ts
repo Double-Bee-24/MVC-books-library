@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import type { Connection } from 'mysql2/promise';
 import cron from 'node-cron';
 
-import { logger } from '../config/logger';
+import { logger } from '#config/logger';
 
 const BACKUP_DIR = './backups';
 

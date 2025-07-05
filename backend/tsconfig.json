@@ -9,7 +9,16 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-
-    "noEmit": false
+    "noEmit": false,
+    "paths": {
+      "#config/*": ["./src/config/*.ts"],
+      "#controllers/*": ["./src/controllers/*.ts"],
+      "#interfaces": ["./src/interfaces/index.ts"],
+      "#middlewares/*": ["./src/middlewares/*.ts"],
+      "#models/*": ["./src/models/*.ts"],
+      "#routes/*": ["./src/routes/*.ts"],
+      "#scripts/*": ["./src/scripts/*.ts"],
+      "#types/*": ["./src/types/*.ts"]
+    }
   }
 }

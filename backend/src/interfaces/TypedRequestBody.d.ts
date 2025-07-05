@@ -1,3 +1,3 @@
-export default interface TypedRequestBody<T> extends Express.Request {
+export interface TypedRequestBody<T> extends Express.Request {
   body: T;
 }

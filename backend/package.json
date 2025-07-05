@@ -51,5 +51,15 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.1"
+  },
+  "imports": {
+    "#config/*": "./src/config/*.ts",
+    "#controllers/*": "./src/controllers/*.ts",
+    "#middlewares/*": "./src/middlewares/*.ts",
+    "#models/*": "./src/models/*.ts",
+    "#routes/*": "./src/routes/*.ts",
+    "#scripts/*": "./src/scripts/*.ts",
+    "#types/*": "./src/types/*.ts",
+    "#interfaces": "./src/interfaces/index.ts"
   }
 }

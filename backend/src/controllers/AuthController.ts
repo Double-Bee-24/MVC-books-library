@@ -4,15 +4,13 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import type { Connection } from 'mysql2/promise';
 
-import { logger } from '../config/logger';
-import type ILoginBody from '../interfaces/ILoginBody';
-import type IRefresshToken from '../interfaces/IRefreshToken';
-import type TypedRequestBody from '../interfaces/TypedRequestBody';
+import { logger } from '#config/logger';
+import type { TypedRequestBody, IRefreshToken, ILoginBody } from '#interfaces';
 import {
   checkPassword,
   getAdminIdFromDb,
   saveRefreshTokenToDb,
-} from '../models/AuthModel';
+} from '#models/AuthModel';
 
 // Login admin to website
 const login = async (
@@ -58,7 +56,7 @@ const login = async (
 };
 
 const updateToken = async (
-  req: TypedRequestBody<IRefresshToken>,
+  req: TypedRequestBody<IRefreshToken>,
   res: Response,
   connection: Connection
 ): Promise<void> => {

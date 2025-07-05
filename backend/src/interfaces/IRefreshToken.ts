@@ -1,3 +1,3 @@
-export default interface IRefresshToken {
+export interface IRefreshToken {
   refreshToken: string;
 }
