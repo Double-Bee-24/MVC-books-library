@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2020",
     "module": "CommonJS",
     "typeRoots": ["./node_modules/@types", "src/types"],
     "types": [],
@@ -9,16 +9,16 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "noEmit": false,
-    "paths": {
-      "#config/*": ["./src/config/*.ts"],
-      "#controllers/*": ["./src/controllers/*.ts"],
-      "#interfaces": ["./src/interfaces/index.ts"],
-      "#middlewares/*": ["./src/middlewares/*.ts"],
-      "#models/*": ["./src/models/*.ts"],
-      "#routes/*": ["./src/routes/*.ts"],
-      "#scripts/*": ["./src/scripts/*.ts"],
-      "#types/*": ["./src/types/*.ts"]
-    }
+    "noEmit": false
+    // "paths": {
+    //   "#config/*": ["./src/config/*.ts"],
+    //   "#controllers/*": ["./src/controllers/*.ts"],
+    //   "#interfaces": ["./src/interfaces/index.ts"],
+    //   "#middlewares/*": ["./src/middlewares/*.ts"],
+    //   "#models/*": ["./src/models/*.ts"],
+    //   "#routes/*": ["./src/routes/*.ts"],
+    //   "#scripts/*": ["./src/scripts/*.ts"],
+    //   "#types/*": ["./src/types/*.ts"]
+    // }
   }
 }

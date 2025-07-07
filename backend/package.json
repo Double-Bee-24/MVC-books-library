@@ -8,7 +8,7 @@
     "format": "prettier --write .",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
-    "start:prod": "cross-env NODE_ENV=prod node --env-file=.env dist/server.js",
+    "start:prod": "cross-env NODE_ENV=prod node dist/server.js",
     "start:dev": "cross-env NODE_ENV=dev nodemon --watch src --exec ts-node src/server.ts",
     "build-and-start": "npm run build && npm run start:prod",
     "lint": "eslint --config eslint.config.mjs \"src/**/*.{js,ts}\"",
@@ -51,15 +51,5 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.1"
-  },
-  "imports": {
-    "#config/*": "./src/config/*.ts",
-    "#controllers/*": "./src/controllers/*.ts",
-    "#middlewares/*": "./src/middlewares/*.ts",
-    "#models/*": "./src/models/*.ts",
-    "#routes/*": "./src/routes/*.ts",
-    "#scripts/*": "./src/scripts/*.ts",
-    "#types/*": "./src/types/*.ts",
-    "#interfaces": "./src/interfaces/index.ts"
   }
 }

@@ -3,7 +3,7 @@ import path from 'path';
 
 import type { Connection, RowDataPacket } from 'mysql2/promise';
 
-import { logger } from '#config/logger';
+import { logger } from '../config/logger';
 
 interface Migration extends RowDataPacket {
   migration_name: string;

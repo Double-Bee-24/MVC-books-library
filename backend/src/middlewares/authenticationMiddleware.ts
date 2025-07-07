@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
-import { logger } from '#config/logger';
+import { logger } from '../config/logger';
 
 // Check jwt token relevancy before admin's actions
 const authenticationMiddleware = (

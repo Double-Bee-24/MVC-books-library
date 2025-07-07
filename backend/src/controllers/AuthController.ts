@@ -4,13 +4,17 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import type { Connection } from 'mysql2/promise';
 
-import { logger } from '#config/logger';
-import type { TypedRequestBody, IRefreshToken, ILoginBody } from '#interfaces';
+import { logger } from '../config/logger';
+import type {
+  TypedRequestBody,
+  IRefreshToken,
+  ILoginBody,
+} from '../interfaces';
 import {
   checkPassword,
   getAdminIdFromDb,
   saveRefreshTokenToDb,
-} from '#models/AuthModel';
+} from '../models/AuthModel';
 
 // Login admin to website
 const login = async (

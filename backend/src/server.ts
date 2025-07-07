@@ -2,13 +2,13 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { pinoHttp } from 'pino-http';
 
-import createConnection from '#config/database';
-import { logger } from '#config/logger';
-import { createAdminRouter } from '#routes/adminRouter';
-import { createRouter } from '#routes/router';
-import createAdmin from '#scripts/createAdmin';
-import runMigrations from '#scripts/migrate';
-import runSchedule from '#scripts/runSchedule';
+import createConnection from './config/database';
+import { logger } from './config/logger';
+import { createAdminRouter } from './routes/adminRouter';
+import { createRouter } from './routes/router';
+import createAdmin from './scripts/createAdmin';
+import runMigrations from './scripts/migrate';
+import runSchedule from './scripts/runSchedule';
 
 dotenv.config();
 // Need to access env variable safely
