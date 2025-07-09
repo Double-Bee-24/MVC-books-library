@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { pinoHttp } from 'pino-http';
@@ -19,6 +20,7 @@ const app = express();
 // Provide correct reading of requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: "http://localhost:4000" }));
 
 // Use the same logger as middleware for logging http requests and as a standalone logger
 const httpLogger = pinoHttp({

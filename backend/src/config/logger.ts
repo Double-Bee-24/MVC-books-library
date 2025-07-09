@@ -1,37 +1,27 @@
 import pino from 'pino';
-import { createPinoBrowserSend, createWriteStream } from 'pino-logflare';
+import type { LokiOptions } from 'pino-loki';
 
 const {
   NODE_ENV = 'dev',
-  LOGFLARE_API_KEY = '',
-  LOGFLARE_SOURCE_TOKEN = '',
 } = process.env;
 
-// Shows logs at https://logflare.app/
-const getLogflareLogger = () => {
-  // create pino-logflare stream
-  const logflareStream = createWriteStream({
-    apiKey: LOGFLARE_API_KEY,
-    sourceToken: LOGFLARE_SOURCE_TOKEN,
-  });
+const getLokiLogger = () => {
+  const transport = pino.transport<LokiOptions>({
+    target: "pino-loki",
+    options: {
+      batching: true,
+      interval: 5,
 
-  // create pino-logflare browser stream
-  const send = createPinoBrowserSend({
-    apiKey: LOGFLARE_API_KEY,
-    sourceToken: LOGFLARE_SOURCE_TOKEN,
-  });
-
-  return pino(
-    {
-      browser: {
-        transmit: {
-          send: send,
-        },
+      host: 'http://localhost:3100',
+      basicAuth: {
+        username: "username",
+        password: "password",
       },
     },
-    logflareStream
-  );
-};
+  });
+
+  return pino(transport);
+}
 
 // Shows logs in console
 const getDevLogger = () => {
@@ -45,6 +35,6 @@ const getDevLogger = () => {
   });
 };
 
-const logger = NODE_ENV === 'prod' ? getLogflareLogger() : getDevLogger();
+const logger = NODE_ENV === 'prod' ? getLokiLogger() : getDevLogger();
 
 export { logger };
