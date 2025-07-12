@@ -2,8 +2,8 @@ import type { Router } from 'express';
 import express from 'express';
 import type { Connection } from 'mysql2/promise';
 
-import { deleteBook, addBook } from '../controllers/BookController';
-import authenticationMiddleware from '../middlewares/authenticationMiddleware';
+import { deleteBook, addBook } from '../controllers/book.controller';
+import authenticationMiddleware from '../middlewares/auth.middleware';
 
 const createAdminRouter = (connection: Connection): Router => {
   const adminRouter = express.Router();

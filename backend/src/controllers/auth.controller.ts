@@ -14,7 +14,7 @@ import {
   checkPassword,
   getAdminIdFromDb,
   saveRefreshTokenToDb,
-} from '../models/AuthModel';
+} from '../models/auth.model';
 
 // Login admin to website
 const login = async (

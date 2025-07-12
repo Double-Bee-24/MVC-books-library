@@ -10,7 +10,7 @@ import {
   addBookToDb,
   getTotalBooksCount,
   searchBooksInDb,
-} from '../models/BookModel';
+} from '../models/book.model';
 
 const getBooks = async (
   req: Request,

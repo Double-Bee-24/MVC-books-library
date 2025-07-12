@@ -2,12 +2,12 @@ import type { Router } from 'express';
 import express from 'express';
 import type { Connection } from 'mysql2/promise';
 
-import { login, updateToken } from '../controllers/AuthController';
+import { login, updateToken } from '../controllers/auth.controller';
 import {
   getBooks,
   increaseBookRate,
   searchBooks,
-} from '../controllers/BookController';
+} from '../controllers/book.controller';
 
 const createRouter = (connection: Connection): Router => {
   const router = express.Router();
