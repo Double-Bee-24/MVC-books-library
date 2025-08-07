@@ -3,14 +3,14 @@ import type { Connection } from 'mysql2/promise';
 
 import { logger } from '../config/logger';
 import {
-  getBooksWithAuthorsFromDb,
   deleteBookFromDb,
   increaseClicksInDb,
   increaseViewsInDb,
   addBookToDb,
-  getTotalBooksCount,
   searchBooksInDb,
 } from '../models/book.model';
+import * as bookService from '../services/book.service';
+// Get all books
 
 const getBooks = async (
   req: Request,
@@ -24,8 +24,11 @@ const getBooks = async (
       res.status(400).json({ error: 'Incorrect data type' });
       return;
     }
-    const books = await getBooksWithAuthorsFromDb(offset, connection);
-    const totalBooksCount = await getTotalBooksCount(connection);
+
+    const { books, totalBooksCount } = await bookService.getBooks(
+      offset,
+      connection
+    );
 
     res.status(200).json({ books, totalBooksCount });
   } catch (err) {
